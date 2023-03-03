@@ -1,0 +1,104 @@
+*{
+    color: rgb(255, 255, 255);
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(32, 32, 32);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 0;
+    padding: 0;
+}
+
+#main-wrapper{
+
+    width: 90vw;
+    height: 80vh;
+    padding: 2.5vw;
+
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10vw;
+    background-color: red;
+}
+#left-pane{
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#left-pane form{
+
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: blueviolet;
+    margin: 0;
+}
+
+#checkbox-wrapper{
+
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(4,1fr);
+    grid-auto-flow: column;
+    row-gap: 10px;
+    column-gap: 15px;
+
+    margin: auto;
+}
+
+#checkbox-wrapper > div{
+    background-color: orange;
+
+    height: 36px;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+#result-wrapper{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(2,1fr);
+    gap: 10px;
+}
+
+#result-wrapper div {
+    background-color: blue;
+}
+
+#source-value{
+    grid-column:  1 / span 2;
+    grid-row: 1;
+}
+
+#source-base{
+    grid-column: 3;
+    grid-row: 1;
+    aspect-ratio: 1 / 1;
+}
+
+#outcome-value{
+    grid-column:  2 / span 2;
+    grid-row: 2;
+}
+
+#outcome-base{
+    grid-column: 1;
+    grid-row: 2;
+    aspect-ratio: 1 / 1;
+}
+
+.highlight-2{
+    color : red;
+    font-size: 1.5em;
+}
