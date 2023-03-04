@@ -3,12 +3,15 @@
 <html lang="es">
 
     <head>
+        <title>Conversor de números</title>
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/VisualResources/style.css">
         <link rel="shortcut icon" href="/VisualResources/favico.png" type="image/x-icon">
-        <title>Conversor de números</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
     </head>
 
     <body>
@@ -21,62 +24,74 @@
 
                 <form>
                         
-                    <label for="prompr-textbox">Ingrese un número: </label>
-                    <input id="prompt-textbox" type="text">
+                    <div id="input-wrapper">
+                        <label for="prompt-textbox">Ingrese un número: </label>
+                        <input id="prompt-textbox" type="text">
+                    </div>
 
                     <div id="checkbox-wrapper">
 
-                        <div>
-                            <label for="source-b2">Binario (Base 02)</label>
-                            <input type="radio" name="sourceformat" id="source-b02" value="base02">
-                        </div>
-                        <div>
-                            <label for="source-b08">Octal (Base 08)</label>
-                            <input type="radio" name="sourceformat" id="source-b08" value="base08">
-                        </div>
-                        <div>
-                            <label for="source-b10">Decimal (Base 10)</label>
+                        
+                        <label for="source-b02">
+                            Binario (Base 02) 
+                            <input type="radio" name="sourceformat" id="source-b02" value="base02"> 
+                        </label>
+                            
+                        <label for="source-b08">
+                            Octal (Base 08)
+                            <input type="radio" name="sourceformat" id="source-b08" value="base08"> 
+                        </label>  
+                    
+                        <label for="source-b10">
+                            Decimal (Base 10)
                             <input type="radio" name="sourceformat" id="source-b10" value="base10">
-                        </div>
-                        <div>
-                            <label for="source-b16">Binario (Base 16)</label>
+                        </label>
+                            
+                        <label for="source-b16">Binario (Base 16)
                             <input type="radio" name="sourceformat" id="source-b16" value="base16">
-                        </div>
-
-
-                        <div>
-                            <label for="outcome-b2">Binario (Base 02)</label>
+                        </label>
+                            
+                        <label for="outcome-b2">
+                            Binario (Base 02)
                             <input type="radio" name="outcomeformat" id="outcome-b02" value="base02">
-                        </div>
-                        <div>
-                            <label for="outcome-b08">Octal (Base 08)</label>
+                        </label>
+                            
+                        <label for="outcome-b08">
+                            Octal (Base 08)
                             <input type="radio" name="outcomeformat" id="outcome-b08" value="base08">
-                        </div>
-                        <div>
-                            <label for="outcome-b10">Decimal (Base 10)</label>
+                        </label>
+                            
+                        <label for="outcome-b10">
+                            Decimal (Base 10)
                             <input type="radio" name="outcomeformat" id="outcome-b10" value="base10">
-                        </div>
-                        <div>   
-                            <label for="outcome-b16">Binario (Base 16)</label>
+                        </label>
+                            
+                        <label for="outcome-b16">
+                            Binario (Base 16)
                             <input type="radio" name="outcomeformat" id="outcome-b16" value="base16">
-                        </div> 
+                        </label>
+                            
 
                     </div>
                         
-                        <input type="button"  id="convert-button" value="Convertir número">
-                        
                 </form>
+
+                <input type="button"  id="convert-button" value="Convertir número">
+
             </div>
 
             <div id="right-pane">
 
-                <h2>Resultado</h2>
+                <div>
+                    <h2>Resultado</h2>
 
-                <div id="result-wrapper">
-                    <div id="source-base"></div>
-                    <div id="source-value"></div>
-                    <div id="outcome-base"></div>
-                    <div id="outcome-value"></div>
+                    <div id="result-wrapper">
+                        <div id="source-base"></div>
+                        <div id="source-value"></div>
+                        <div id="outcome-base"></div>
+                        <div id="outcome-value"></div>
+                    </div>
+
                 </div>
 
         </div>

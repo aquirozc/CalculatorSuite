@@ -1,5 +1,7 @@
 *{
-    color: rgb(255, 255, 255);
+    color: rgb(266, 266, 266);
+    font-family: 'Open Sans';
+    font-weight: 300;
     box-sizing: border-box;
 }
 
@@ -15,19 +17,18 @@ body{
 }
 
 #main-wrapper{
-
     width: 90vw;
     height: 80vh;
     padding: 2.5vw;
 
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 10vw;
-    background-color: red;
+    grid-template-columns: 3fr 5fr;
+    gap: 2.5vw;
 }
 #left-pane{
-    background-color: green;
+
     display: flex;
+    min-width: 280px;
     flex-direction: column;
     justify-content: space-around;
 }
@@ -36,9 +37,34 @@ body{
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background-color: blueviolet;
+    justify-content: space-evenly;
     margin: 0;
+}
+
+#prompt-textbox{
+    padding: 0.5em;
+    color: black;
+}
+
+#convert-button{
+
+    background-color: rgb(66, 66, 66);
+    border: none;
+    padding: 0.5em;
+}
+
+#convert-button:active{
+
+    background-color: rgb(77, 77, 77);
+
+   
+}
+
+#input-wrapper *{
+
+    width: 100%;
+    display: block;
+    
 }
 
 #checkbox-wrapper{
@@ -50,11 +76,11 @@ body{
     row-gap: 10px;
     column-gap: 15px;
 
-    margin: auto;
 }
 
-#checkbox-wrapper > div{
-    background-color: orange;
+
+#checkbox-wrapper > label{
+
 
     height: 36px;
 
@@ -63,17 +89,34 @@ body{
     justify-content: flex-end;
     align-items: center;
 
+    background-color: rgb(108, 103, 103);
+
+}
+
+#right-pane{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 #result-wrapper{
     display: grid;
+    width: 75vh;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(2,1fr);
     gap: 10px;
 }
 
 #result-wrapper div {
-    background-color: blue;
+    
+    background-color: rgb(66, 66, 66);
+    font-size: 1.5em;
+
+    display: flex;
+    align-items: center;
+
 }
 
 #source-value{
@@ -99,6 +142,6 @@ body{
 }
 
 .highlight-2{
-    color : red;
-    font-size: 1.5em;
+    font-size: 2em;
+    
 }
