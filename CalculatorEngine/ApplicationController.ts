@@ -77,7 +77,7 @@ function convertirEntrada(){
 
                 case 'base10' :
 
-                    valorSalida =  <string><unknown>analizadorEntrada.convertirNumeroBinarioADecimal(entradaUsuario.value);
+                    valorSalida = <string><unknown>analizadorEntrada.convertirNumeroBinarioADecimal(entradaUsuario.value);
 
                 break;
 
@@ -103,9 +103,13 @@ function convertirEntrada(){
 
                 case 'base10' :
 
+                    valorSalida = <string><unknown> analizadorEntrada.convertirNumeroOctalADecimal(<number><unknown> entradaUsuario.value);
+
                 break;
 
                 case 'base16' :
+
+                    valorSalida = analizadorEntrada.convertirNumeroOctalAHexadecimal(<number><unknown> entradaUsuario.value);
 
                 break;
 
@@ -125,9 +129,13 @@ function convertirEntrada(){
 
                 case 'base08' :
 
+                    valorSalida = <string><unknown>analizadorEntrada.convertirNumeroDecimalAOctal(<number><unknown> entradaUsuario.value);
+
                 break;
 
                 case 'base16' :
+
+                    valorSalida = analizadorEntrada.convertirNumeroDecimalAHexadecimal(<number><unknown> entradaUsuario.value);
 
                 break;
 
@@ -147,9 +155,13 @@ function convertirEntrada(){
 
                 case 'base08' :
 
+                    valorSalida = <string><unknown> analizadorEntrada.convertirNumeroHexadecimalAOctal(entradaUsuario.value);
+
                 break;
 
                 case 'base10' :
+
+                    valorSalida = <string><unknown> analizadorEntrada.convertirNumeroHexadecimalADecimal(entradaUsuario.value);
 
                 break;
 

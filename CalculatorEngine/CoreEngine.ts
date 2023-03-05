@@ -225,42 +225,9 @@ class AnalizadorEntrada{
 
     }
 
-    public convertirNumeroOctalABinario(numeroOctal : number) : string{
-
-        return this.calculadoraBinaria.convertirOctalABinario(numeroOctal);
-
-    }
-
     public convertirNumeroBinarioAOctal(numeroBinario : string) : number{
 
         return this.calculadoraBinaria.convertirBinarioAOctal(numeroBinario);
-
-    }
-
-    public convertirNumeroDecimalABinario(numeroDecimal : number) : string{
-
-        let  numeroBinario : string;
-
-        let parteEntera : number;
-        let parteDecimal : number;
-        let mantisaNumeroBinario : string;
-
-        parteEntera = Math.trunc(numeroDecimal);
-        parteDecimal = numeroDecimal - parteEntera;
-        mantisaNumeroBinario = '';
-
-
-        if (parteDecimal != 0){
-
-            mantisaNumeroBinario = '.' +  this.calculadoraBinaria.convertirDecimalFraccionarioABinario(parteDecimal);
-
-        }
-
-        numeroBinario = this.calculadoraBinaria.convertirDecimalEnteroABinario(parteEntera) + mantisaNumeroBinario;
-        
-
-        return numeroBinario;
-
 
     }
 
@@ -290,11 +257,105 @@ class AnalizadorEntrada{
 
     }
 
+    
+
+    public convertirNumeroDecimalABinario(numeroDecimal : number) : string{
+
+        let  numeroBinario : string;
+
+        let parteEntera : number;
+        let parteDecimal : number;
+        let mantisaNumeroBinario : string;
+
+        parteEntera = Math.trunc(numeroDecimal);
+        parteDecimal = numeroDecimal - parteEntera;
+        mantisaNumeroBinario = '';
+
+
+        if (parteDecimal != 0){
+
+            mantisaNumeroBinario = '.' +  this.calculadoraBinaria.convertirDecimalFraccionarioABinario(parteDecimal);
+
+        }
+
+        numeroBinario = this.calculadoraBinaria.convertirDecimalEnteroABinario(parteEntera) + mantisaNumeroBinario;
+        
+
+        return numeroBinario;
+
+
+    }
+
+    public convertirNumeroDecimalAOctal(numeroDecimal : number) : number{
+
+        let numeroOctal : number;
+
+        numeroOctal = this.convertirNumeroBinarioAOctal(this.convertirNumeroDecimalABinario(numeroDecimal));
+
+        return numeroOctal;
+
+    }
+
+    public convertirNumeroDecimalAHexadecimal(numeroDecimal : number) : string {
+
+        let numeroHexadecimal : string;
+
+        numeroHexadecimal = this.convertirNumeroBinarioAHexadecimal(this.convertirNumeroDecimalABinario(numeroDecimal));
+
+        return numeroHexadecimal;
+
+    }
+
+    public convertirNumeroOctalABinario(numeroOctal : number) : string{
+
+        return this.calculadoraBinaria.convertirOctalABinario(numeroOctal);
+
+    }
+
+    public convertirNumeroOctalADecimal(numeroOctal : number) : number{
+
+        let numeroDecimal : number;
+
+        numeroDecimal = this.convertirNumeroBinarioADecimal(this.convertirNumeroOctalABinario(numeroOctal)); 
+
+        return numeroDecimal;
+
+    }
+
+    public convertirNumeroOctalAHexadecimal(numeroOctal : number) : string {
+
+        let numeroHexadecimal : string;
+
+        numeroHexadecimal = this.convertirNumeroBinarioAHexadecimal(this.convertirNumeroOctalABinario(numeroOctal));
+
+        return numeroHexadecimal;
+
+    }
+
     public convertirNumeroHexadecimalABinario(numeroHexadecimal : string) :string{
 
         return this.calculadoraBinaria.convertirHexadecimalABinario(numeroHexadecimal);
         
     }
 
+    public convertirNumeroHexadecimalAOctal(numeroHexadecimal : string) : number{
+
+        let numeroOctal : number;
+        
+        numeroOctal = this.convertirNumeroBinarioAOctal(this.convertirNumeroHexadecimalABinario(numeroHexadecimal));
+
+        return numeroOctal;
+
+    }
+
+    public convertirNumeroHexadecimalADecimal(numeroHexadecimal : string) : number{
+
+        let numeroDecimal : number;
+
+        numeroDecimal = this.convertirNumeroBinarioADecimal(this.convertirNumeroHexadecimalABinario(numeroHexadecimal));
+
+        return numeroDecimal;
+
+    }
 
 }
