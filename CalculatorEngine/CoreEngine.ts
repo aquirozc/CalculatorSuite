@@ -3,14 +3,65 @@ export{AnalizadorEntrada}
 
 class CalculadoraBinaria {
 
-   public convertirBinarioADecimalEntero(enteroBase2 : string) : number{
+    public convertirBinarioAOctal(enteroBase02 : string) : number {
+
+        let enteroBase08 : number = 0;
+        let aux : string = '';
+
+        let longuitudDeseada = Math.ceil(enteroBase02.length / 3) * 3;
+
+        if(longuitudDeseada != enteroBase02.length){
+
+            enteroBase02 = enteroBase02.padStart(longuitudDeseada,'0');
+
+        }
+
+        for (let i : number = 0; i < longuitudDeseada-2; i +=3){
+
+            let segmento : string = '';
+            segmento += enteroBase02.charAt(i);
+            segmento += enteroBase02.charAt(i + 1);
+            segmento += enteroBase02.charAt(i + 2);
+
+            aux += <string> <unknown> this.convertirBinarioADecimalEntero(segmento);
+
+        }
+
+        enteroBase08 = <number> <unknown> aux;
+
+        return enteroBase08;
+    }
+
+    public convertirOctalABinario(enteroBase08 : number) : string {
+
+        let enteroBase02 : string = '';
+
+        for(let digito of enteroBase08.toString()){
+
+            let segmento : string = this.convertirDecimalEnteroABinario(<number> <unknown> digito);
+
+            if (segmento.length < 3){
+                
+                segmento =  segmento.padStart(3,'0');
+
+            }
+
+            enteroBase02 += segmento;
+
+        }
+
+        return enteroBase02;
+        
+    }
+
+   public convertirBinarioADecimalEntero(enteroBase02 : string) : number{
 
         let enteroBase10 : number = 0;
 
-        for (let i = 0; i < enteroBase2.length; i++){
+        for (let i = 0; i < enteroBase02.length; i++){
 
-            let indiceActual = (enteroBase2.length - 1) - i;
-            enteroBase10 += (parseFloat(enteroBase2.charAt(indiceActual)) * Math.pow(2, i));
+            let indiceActual = (enteroBase02.length - 1) - i;
+            enteroBase10 += (parseFloat(enteroBase02.charAt(indiceActual)) * Math.pow(2, i));
 
         }
 
@@ -20,7 +71,7 @@ class CalculadoraBinaria {
 
     public convertirDecimalEnteroABinario (enteroBase10 : number) : string{
 
-        let enteroBase2 : string =  '';
+        let enteroBase02 : string =  '';
         
         let aux : string = '';
         
@@ -47,23 +98,23 @@ class CalculadoraBinaria {
         for (let i = 0; i < aux.length; i++){
 
             let indiceActual = (aux.length - 1) - i;
-            enteroBase2 += aux.charAt(indiceActual);
+            enteroBase02 += aux.charAt(indiceActual);
 
         }
 
-        return enteroBase2;
+        return enteroBase02;
 
 
     }
 
-    public convertirBinarioADecilmalFraccionario(fraccionarioBase2 : string) : number{
+    public convertirBinarioADecilmalFraccionario(fraccionarioBase02 : string) : number{
 
         let fraccionarioBase10 : number = 0;
 
-        for (let i = 0; i < fraccionarioBase2.length; i++){
+        for (let i = 0; i < fraccionarioBase02.length; i++){
 
-            let indiceActual = (fraccionarioBase2.length - 1) - i;
-            fraccionarioBase10 += (parseFloat(fraccionarioBase2.charAt(i)) * Math.pow(2,-(i+1)));
+            let indiceActual = (fraccionarioBase02.length - 1) - i;
+            fraccionarioBase10 += (parseFloat(fraccionarioBase02.charAt(i)) * Math.pow(2,-(i+1)));
 
         }
 
@@ -73,7 +124,7 @@ class CalculadoraBinaria {
 
     public convertirDecimalFraccionarioABinario(fraccionarioBase10 : number) : string{
 
-        let fraccionarioBase2 : string = '';
+        let fraccionarioBase02 : string = '';
 
         for (let i  = 0; i <= 5; i++){
 
@@ -81,18 +132,86 @@ class CalculadoraBinaria {
 
             if(fraccionarioBase10 >= 1){
 
-                fraccionarioBase2 += '1'
+                fraccionarioBase02 += '1'
                 fraccionarioBase10--;
 
             } else{
-                fraccionarioBase2 += '0'
+                fraccionarioBase02 += '0'
             }
             
         }
 
-        return fraccionarioBase2;
+        return fraccionarioBase02;
 
     }
+
+    public convertirBinarioAHexadecimal(enteroBase02: string):string{
+
+        let enteroBase16 : string = '';
+
+        let longuitudDeseada = Math.ceil(enteroBase02.length / 4) * 4;
+
+        if(longuitudDeseada != enteroBase02.length){
+
+            enteroBase02 = enteroBase02.padStart(longuitudDeseada,'0');
+
+        }
+
+        for (let i : number = 0; i < longuitudDeseada-3; i +=4){
+
+            let segmento : string = '';
+            let aux : string | number;
+
+            segmento += enteroBase02.charAt(i);
+            segmento += enteroBase02.charAt(i + 1);
+            segmento += enteroBase02.charAt(i + 2);
+            segmento += enteroBase02.charAt(i + 3);
+
+            aux = this.convertirBinarioADecimalEntero(segmento);
+
+            if (aux >= 10){
+
+                aux = String.fromCharCode(55 + aux);
+
+            }
+
+            enteroBase16 += <string> aux;
+
+        }
+
+        return enteroBase16;
+
+    }
+
+    public convertirHexadecimalABinario(enteroBase16 : string) :string {
+
+        let enteroBase02 : string = '';
+
+        for(let digito of enteroBase16.toString()){
+
+            let aux : string | number = digito;
+
+            if(aux.charCodeAt(0) >= 65){
+                aux = aux.charCodeAt(0) - 55;
+            }
+
+            let segmento : string = this.convertirDecimalEnteroABinario(<number> aux);
+
+            if (segmento.length < 4){
+                
+                segmento =  segmento.padStart(4,'0');
+
+            }
+
+            enteroBase02 += segmento;
+
+        }
+
+        return enteroBase02;
+
+    }
+
+    
 
 }
 
@@ -103,6 +222,18 @@ class AnalizadorEntrada{
     constructor (calculadoraBinaria : CalculadoraBinaria){
 
         this.calculadoraBinaria = calculadoraBinaria;
+
+    }
+
+    public convertirNumeroOctalABinario(numeroOctal : number) : string{
+
+        return this.calculadoraBinaria.convertirOctalABinario(numeroOctal);
+
+    }
+
+    public convertirNumeroBinarioAOctal(numeroBinario : string) : number{
+
+        return this.calculadoraBinaria.convertirBinarioAOctal(numeroBinario);
 
     }
 
@@ -152,5 +283,18 @@ class AnalizadorEntrada{
         return numeroDecimal;
 
     }
+
+    public convertirNumeroBinarioAHexadecimal(numeroBinario : string) : string{
+
+        return this.calculadoraBinaria.convertirBinarioAHexadecimal(numeroBinario);
+
+    }
+
+    public convertirNumeroHexadecimalABinario(numeroHexadecimal : string) :string{
+
+        return this.calculadoraBinaria.convertirHexadecimalABinario(numeroHexadecimal);
+        
+    }
+
 
 }

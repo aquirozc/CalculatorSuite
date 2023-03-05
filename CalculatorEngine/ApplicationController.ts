@@ -71,6 +71,8 @@ function convertirEntrada(){
 
                 case 'base08' :
 
+                    valorSalida = <string> <unknown> analizadorEntrada.convertirNumeroBinarioAOctal(entradaUsuario.value);
+
                 break;
 
                 case 'base10' :
@@ -80,6 +82,8 @@ function convertirEntrada(){
                 break;
 
                 case 'base16' :
+
+                    valorSalida = analizadorEntrada.convertirNumeroBinarioAHexadecimal(entradaUsuario.value);
 
                 break;
 
@@ -92,6 +96,8 @@ function convertirEntrada(){
             switch(formatoSalida.value){
 
                 case 'base02' :
+
+                    valorSalida = analizadorEntrada.convertirNumeroOctalABinario(<number><unknown> entradaUsuario.value);
 
                 break;
 
@@ -131,23 +137,25 @@ function convertirEntrada(){
 
         case 'base16' : 
 
-        switch(formatoSalida.value){
+            switch(formatoSalida.value){
 
-            case 'base02' :
+                case 'base02' :
+
+                    valorSalida = analizadorEntrada.convertirNumeroHexadecimalABinario(entradaUsuario.value);
+
+                break;
+
+                case 'base08' :
+
+                break;
+
+                case 'base10' :
+
+                break;
+
+            }
 
             break;
-
-            case 'base08' :
-
-            break;
-
-            case 'base10' :
-
-            break;
-
-        }
-
-        break;
 
     }
 
