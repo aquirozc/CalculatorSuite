@@ -1,4 +1,3 @@
-export{CalculadoraBinaria}
 export{AnalizadorEntrada}
 
 class CalculadoraBinaria {
@@ -219,15 +218,19 @@ class AnalizadorEntrada{
 
     private calculadoraBinaria : CalculadoraBinaria;
 
-    constructor (calculadoraBinaria : CalculadoraBinaria){
+    constructor (){
 
-        this.calculadoraBinaria = calculadoraBinaria;
+        this.calculadoraBinaria = new CalculadoraBinaria();
 
     }
 
     public convertirNumeroBinarioAOctal(numeroBinario : string) : number{
 
-        return this.calculadoraBinaria.convertirBinarioAOctal(numeroBinario);
+        let numeroOctal: number;
+
+        numeroOctal = this.calculadoraBinaria.convertirBinarioAOctal(numeroBinario);
+
+        return numeroOctal;
 
     }
 
@@ -253,7 +256,11 @@ class AnalizadorEntrada{
 
     public convertirNumeroBinarioAHexadecimal(numeroBinario : string) : string{
 
-        return this.calculadoraBinaria.convertirBinarioAHexadecimal(numeroBinario);
+        let numeroHexadecimal : string;
+
+        numeroHexadecimal = this.calculadoraBinaria.convertirBinarioAHexadecimal(numeroBinario);
+
+        return numeroHexadecimal;
 
     }
 
@@ -308,7 +315,11 @@ class AnalizadorEntrada{
 
     public convertirNumeroOctalABinario(numeroOctal : number) : string{
 
-        return this.calculadoraBinaria.convertirOctalABinario(numeroOctal);
+        let numeroBinario : string;
+
+        numeroBinario = this.calculadoraBinaria.convertirOctalABinario(numeroOctal);
+
+        return numeroBinario;
 
     }
 
@@ -334,7 +345,11 @@ class AnalizadorEntrada{
 
     public convertirNumeroHexadecimalABinario(numeroHexadecimal : string) :string{
 
-        return this.calculadoraBinaria.convertirHexadecimalABinario(numeroHexadecimal);
+        let numeroBinario : string;
+
+        numeroBinario = this.calculadoraBinaria.convertirHexadecimalABinario(numeroHexadecimal);
+
+        return numeroBinario;
         
     }
 

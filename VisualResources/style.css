@@ -16,7 +16,7 @@ body{
     padding: 0;
 }
 
-#main-wrapper{
+main{
     
     width: fit-content;
     min-width: 90vw;
@@ -27,14 +27,15 @@ body{
     grid-template-columns: 3fr 5fr;
     gap: 2.5vw;
 }
-#left-pane{
+#panel-izquierdo{
 
     display: flex;
     min-width: 280px;
     flex-direction: column;
     justify-content: space-around;
+
 }
-#left-pane form{
+#panel-izquierdo form{
 
     flex-grow: 1;
     display: flex;
@@ -43,32 +44,32 @@ body{
     margin: 0;
 }
 
-#prompt-textbox{
+#campo-de-texto{
     padding: 0.5em;
     color: black;
 }
 
-#convert-button{
+#boton-convertir{
 
     background-color: rgb(66, 66, 66);
     border: none;
     padding: 0.5em;
 }
 
-#convert-button:active{
+#boton-convertir:active{
 
     background-color: rgb(77, 77, 77);
    
 }
 
-#input-wrapper *{
+#contenedor-campo-de-texto *{
 
     width: 100%;
     display: block;
     
 }
 
-#checkbox-wrapper{
+#contenedor-botones-de-radio{
 
     width: 100%;
     display: grid;
@@ -80,7 +81,7 @@ body{
 }
 
 
-#checkbox-wrapper > label{
+#contenedor-botones-de-radio > label{
 
 
     height: 2.75em;
@@ -95,7 +96,7 @@ body{
 
 }
 
-#right-pane{
+#panel-derecho{
 
     display: flex;
     justify-content: center;
@@ -103,7 +104,7 @@ body{
 
 }
 
-#result-wrapper{
+#contenedor-resultados{
     display: grid;
     width: 75vh;
     grid-template-columns: repeat(3,1fr);
@@ -111,7 +112,7 @@ body{
     gap: 10px;
 }
 
-#result-wrapper div {
+#contenedor-resultados div {
     
     background-color: rgb(66, 66, 66);
     font-size: 1.5em;
@@ -121,36 +122,37 @@ body{
 
 }
 
-#source-value{
+#origen-valor{
     grid-column:  1 / span 2;
     grid-row: 1;
 }
 
-#source-base{
+#origen-sistema{
     grid-column: 3;
     grid-row: 1;
     aspect-ratio: 1 / 1;
 }
 
-#outcome-value{
+#destino-valor{
     grid-column:  2 / span 2;
     grid-row: 2;
 }
 
-#outcome-base{
+#destino-sistema{
     grid-column: 1;
     grid-row: 2;
     aspect-ratio: 1 / 1;
 }
 
-.highlight-2{
+.texto-resaltado{
+
     font-size: 2em;
     
 }
 
 @media only screen and (max-height: 600px) {
 
-    #main-wrapper {
+    main {
 
         height: 100vh;
 
@@ -160,20 +162,26 @@ body{
 
 @media only screen and (max-width: 850px) {
 
-    #main-wrapper {
+    .salto-opcional{
+
+        display: none;
+
+    }
+
+    main {
 
         display: block;
         height: 100vh;
 
     }
 
-    #checkbox-wrapper{
+    #contenedor-botones-de-radio{
 
         margin: 1.5em 0 1.5em 0;
 
     }
 
-    #result-wrapper {
+    #contenedor-resultados {
         width: 90vw;
         margin-bottom: 3em;
     }

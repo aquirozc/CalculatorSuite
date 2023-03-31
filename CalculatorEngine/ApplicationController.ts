@@ -1,10 +1,10 @@
-import {CalculadoraBinaria} from "./CoreEngine";
 import{AnalizadorEntrada} from "./CoreEngine";
 
-const analizadorEntrada : AnalizadorEntrada = new AnalizadorEntrada(new CalculadoraBinaria());
-const botonConvertir : HTMLElement = document.getElementById('convert-button')!;
-const opcionesDeSalida : NodeListOf <HTMLElement> = document.getElementsByName('outcomeformat')!;
-const opcionesDeEntrada: NodeListOf <HTMLElement> = document.getElementsByName('sourceformat')!;
+const analizadorEntrada : AnalizadorEntrada = new AnalizadorEntrada();
+
+const botonConvertir : HTMLElement = document.getElementById('boton-convertir')!;
+const opcionesDeEntrada: NodeListOf <HTMLElement> = document.getElementsByName('sistema-de-origen')!;
+const opcionesDeSalida : NodeListOf <HTMLElement> = document.getElementsByName('sistema-de-destino')!;
 
 botonConvertir.addEventListener('click',convertirEntrada);
 
@@ -25,7 +25,7 @@ function bloquearOpcion(opcionSeleccionada : string){
     let index: string = opcionSeleccionada.substring(opcionSeleccionada.length-3);
     let listaContraria : NodeListOf <HTMLElement>;
     
-    if(opcionSeleccionada.startsWith('source')){
+    if(opcionSeleccionada.startsWith('origen')){
         
         listaContraria = opcionesDeSalida;
         
@@ -77,9 +77,14 @@ function comprobarGramatica(valorEntrada : number | string, caracteresAdmitidos 
 
 function convertirEntrada(){
 
-    let entradaUsuario: HTMLInputElement = document.getElementById('prompt-textbox')! as HTMLInputElement;
-    let formatoFuente : HTMLInputElement = document.querySelector('input[name="sourceformat"]:checked')!;
-    let formatoSalida : HTMLInputElement = document.querySelector('input[name="outcomeformat"]:checked')!;
+    document.getElementById('origen-valor')!.innerText = '';
+    document.getElementById('origen-sistema')!.innerHTML = '';
+    document.getElementById('destino-valor')!.innerText = '' ;
+    document.getElementById('destino-sistema')!.innerHTML = '';
+
+    let entradaUsuario: HTMLInputElement = document.getElementById('campo-de-texto')! as HTMLInputElement;
+    let formatoFuente : HTMLInputElement = document.querySelector('input[name="sistema-de-origen"]:checked')!;
+    let formatoSalida : HTMLInputElement = document.querySelector('input[name="sistema-de-destino"]:checked')!;
     let valorEntrada : string = entradaUsuario.value.replace(/\s/g,'');;
     let valorSalida : string = '';
     let etiquetaFuente : string = formatoFuente.value.substring(formatoFuente.value.length - 2);
@@ -201,9 +206,9 @@ function convertirEntrada(){
 
     }
 
-    document.getElementById('source-value')!.innerText = entradaUsuario.value;
-    document.getElementById('source-base')!.innerHTML = '<span>Base <br><span class="highlight-2">'+etiquetaFuente+'</span></span>';
-    document.getElementById('outcome-value')!.innerText = valorSalida ;
-    document.getElementById('outcome-base')!.innerHTML = '<span>Base <br><span class="highlight-2">'+etiquetaSalida+'</span></span>';
+    document.getElementById('origen-valor')!.innerText = entradaUsuario.value;
+    document.getElementById('origen-sistema')!.innerHTML = '<span>Base <br><span class="texto-resaltado">'+etiquetaFuente+'</span></span>';
+    document.getElementById('destino-valor')!.innerText = valorSalida ;
+    document.getElementById('destino-sistema')!.innerHTML = '<span>Base <br><span class="texto-resaltado">'+etiquetaSalida+'</span></span>';
 
 }
