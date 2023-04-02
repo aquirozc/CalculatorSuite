@@ -4,8 +4,7 @@
 
 Esta herramienta permite tomar una cantidad expresada ya sea en sistema binario, octal, decimal o hexadecimal y convertirla a cualquiera de los sistemas númericos previamente mencionados.
 
-![img](.media/pic.png)
-
+![img](./media/pic.png)
 ### Características
 
 - Soporte para cantidades expresadas en sistema binario (Base exponencial 2)
