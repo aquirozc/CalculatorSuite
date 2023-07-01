@@ -1,168 +1,96 @@
-let barra : HTMLInputElement= document.getElementById("campo-n")! as HTMLInputElement;
-let etiqueta = document.getElementById("etiqueta-n")!;
-let arregloBotones : HTMLInputElement[][];
-let arregloBotones2 : HTMLInputElement[];
-let arregloValores : number [][];
-let arregloValores2 : number[];
-let matrizL: number [][];
-let matrizU : number [][];
-let vectorX : number[];
-let vectorY : number[];
-let btnSiguiente = document.getElementById("btn-siguiente")!;
-let btnSiguiente2 = document.getElementById("btn-siguiente2")!;
+import { FactorizadorDeMatrices } from "./CoreEngine";
 
-barra.addEventListener("input", () => {
+class ApplicationController{
 
-    etiqueta.innerText = barra.value;
+    _barraSelectora : HTMLInputElement = document.getElementById("barra-n")! as HTMLInputElement;
+    _botonGenerarCampos : HTMLButtonElement = document.getElementById("btn-siguiente")! as HTMLButtonElement;
+    _botonResolverSistema : HTMLButtonElement = document.getElementById("btn-siguiente")! as HTMLButtonElement;
+    _elementosMatrizA : HTMLInputElement[][];
+    _elementosVectorB : HTMLInputElement[];
+    _factorizadorDeMatrices : FactorizadorDeMatrices = new FactorizadorDeMatrices();
 
-});
+    public onCreate():void{
 
-btnSiguiente.addEventListener("click",(e: Event) => {
+        this._barraSelectora.addEventListener("input",
+        ()=>{
+            this._barraSelectora.nextElementSibling!.innerHTML = this._barraSelectora.value
+        });
 
-    e.preventDefault();
+        this._botonGenerarCampos.addEventListener("click", (event : Event)=>{
+            event.preventDefault();
+            this.generarCampos(this._barraSelectora.value as unknown as number);
+        });
 
-    let container : HTMLDivElement = document.getElementById("Hola")! as HTMLDivElement;
-    container.innerHTML = "";
+        this._botonResolverSistema.addEventListener("click", (event : Event)=>{
+            event.preventDefault();
+            this.resolverSistema(this._barraSelectora.value as unknown as number);
+        });
 
-    let n : number = barra.value as unknown as number;
-    let tabla :HTMLTableElement = document.createElement("table");
-    arregloBotones = [];
+    }
 
-    for(let i : number = 0; i < n; i++){
+    private generarCampos(n : number):void{
+        let contenedor : HTMLDivElement = document.getElementById("Hola")! as HTMLDivElement;
+        contenedor.innerHTML = "";
 
-        let fila : HTMLTableRowElement = document.createElement("tr");
-        arregloBotones[i] = [];
+        let tabla :HTMLTableElement = document.createElement("table");
+        this._elementosMatrizA = [];
 
-        for(let j : number = 0; j < n; j++){
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+            this._elementosMatrizA[i] = [];
 
+            for(let j : number = 0; j < n; j++){
+                let input : HTMLInputElement = document.createElement("input");
+                let celda : HTMLTableCellElement = document.createElement("td");
+                input.type = "number";
+                this._elementosMatrizA[i][j] = input;
+                celda.append(input);
+                fila.append(celda);
+            }
+            tabla.append(fila);
+        }
+
+        contenedor.append(tabla);
+
+        let tabla2 :HTMLTableElement = document.createElement("table");
+        this._elementosVectorB= [];
+
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
             let input : HTMLInputElement = document.createElement("input");
             let celda : HTMLTableCellElement = document.createElement("td");
             input.type = "number";
-            arregloBotones[i][j] = input;
+            this._elementosVectorB[i] = input;
             celda.append(input);
             fila.append(celda);
-
+            tabla2.append(fila);
         }
-
-        tabla.append(fila);
-
+        contenedor.append(tabla2);    
     }
 
-    document.getElementById("Hola")!.append(tabla);
+    private resolverSistema(n : number){
+        let matrizA : number[][] = [];
+        let vectorB : number[] = [];
 
-    let tabla2 :HTMLTableElement = document.createElement("table");
-    arregloBotones2 = [];
-
-    for(let i : number = 0; i < n; i++){
-
-        let fila : HTMLTableRowElement = document.createElement("tr");
-
-        let input : HTMLInputElement = document.createElement("input");
-        let celda : HTMLTableCellElement = document.createElement("td");
-        input.type = "number";
-        arregloBotones2[i] = input;
-        celda.append(input);
-        fila.append(celda);
-        tabla2.append(fila);
-
-    }
-
-    document.getElementById("Hola")!.append(tabla2);
-
-
-});
-
-btnSiguiente2.addEventListener("click",(e : Event)=>{
-
-    e.preventDefault();
-
-    let n : number = barra.value as unknown as number;
-    arregloValores = [];
-
-    for(let i : number = 0; i < n; i++){
-
-        arregloValores[i] = [];
-
-        for(let j : number = 0; j < n; j++){
-
-            arregloValores[i][j] = arregloBotones[i][j].value as unknown as number;
-
-        }
-
-    }
-
-    arregloValores2 = []
-
-    for(let i : number = 0; i < n; i++){
-
-        arregloValores2[i] = arregloBotones2[i].value as unknown as number;
-
-    }
-
-    matrizU = arregloValores;
-    matrizL = [];
-    for(let l : number = 0; l < n; l++){
-        matrizL[l] = [];
-    }
-
-    for(let i : number = 0; i < n; i++){
-
-        
-        
-
-        matrizL[i][i]=1;
-
-        for(let j : number = i + 1; j < n; j++){
-
-            let pivote : number = matrizU[j][i]/matrizU[i][i];
-            matrizL[j][i] = pivote;
-
-            for(let k : number = 0; k < n; k++){
-
-                matrizU[j][k] = matrizU[j][k] - (pivote * matrizU[i][k]);
-                
+        for(let i : number = 0; i < n; i++){
+            matrizA[i] = [];
+            for(let j : number = 0; j < n; j++){
+                matrizA[i][j] = this._elementosMatrizA[i][j].value as unknown as number;
             }
-
         }
-        
-    }
-
-    vectorY = [];
-
-    for(let i : number = 0; i < n; i++){
-
-        let combinaciónLineal : number = 0;
-
-        for(let j = 0; j<i && i>0; j++){
-
-            combinaciónLineal += matrizL[i][j]*vectorY[j];
-
+    
+        for(let i : number = 0; i < n; i++){
+            vectorB[i] = this._elementosVectorB[i].value as unknown as number;
         }
 
-        vectorY[i] = (arregloValores2[i]-combinaciónLineal)/matrizL[i][i];
-        
+        this._factorizadorDeMatrices.factorizarMatrizOriginal(matrizA);
+        this._factorizadorDeMatrices.resolverSistemaDeEcuaciones(vectorB);
+
+        console.log("Matriz L",this._factorizadorDeMatrices.matrizL);
+        console.log("Matriz U",this._factorizadorDeMatrices.matrizU);
+        console.log("Vector X",this._factorizadorDeMatrices.vectorX);
+        console.log("Vector X",this._factorizadorDeMatrices.vectorY);
     }
+}
 
-    console.log(vectorY);
-
-    vectorX = [];
-
-    for(let i : number = n-1; i >= 0; i--){
-
-        let combinaciónLineal : number = 0;
-
-        for(let j = i+1; j<n && i<n-1; j++){
-
-            combinaciónLineal += matrizU[i][j]*vectorX[j];
-
-        }
-
-        vectorX[i] = (vectorY[i]-combinaciónLineal)/matrizU[i][i];
-        
-    }
-
-    console.log(vectorX);
-
-
-
-});
+new ApplicationController().onCreate;

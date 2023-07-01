@@ -1,4 +1,4 @@
 #!/bin/zsh
-tsc ApplicationController.ts
-browserify ApplicationController.js -o prodReadyBundle.js
-rm ApplicationController.js
+tsc ApplicationController.ts CoreEngine.ts
+browserify ApplicationController.js CoreEngine.ts -o prodReadyBundle.js
+rm ApplicationController.js CoreEngine.ts
