@@ -1,4 +1,5 @@
 export {FactorizadorDeMatrices}
+import { ApplicationController } from "./ApplicationController";
 
 class FactorizadorDeMatrices{
     

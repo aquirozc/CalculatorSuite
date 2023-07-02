@@ -1,13 +1,14 @@
+export {ApplicationController}
 import { FactorizadorDeMatrices } from "./CoreEngine";
 
 class ApplicationController{
 
-    _barraSelectora : HTMLInputElement = document.getElementById("barra-n")! as HTMLInputElement;
-    _botonGenerarCampos : HTMLButtonElement = document.getElementById("btn-siguiente")! as HTMLButtonElement;
-    _botonResolverSistema : HTMLButtonElement = document.getElementById("btn-siguiente")! as HTMLButtonElement;
-    _elementosMatrizA : HTMLInputElement[][];
-    _elementosVectorB : HTMLInputElement[];
-    _factorizadorDeMatrices : FactorizadorDeMatrices = new FactorizadorDeMatrices();
+    private _barraSelectora : HTMLInputElement = document.getElementById("campo-n")! as HTMLInputElement;
+    private _botonGenerarCampos : HTMLButtonElement = document.getElementById("btn-generar-campos")! as HTMLButtonElement;
+    private _botonResolverSistema : HTMLButtonElement = document.getElementById("btn-resolver-sistema")! as HTMLButtonElement;
+    private _elementosMatrizA : HTMLInputElement[][];
+    private _elementosVectorB : HTMLInputElement[];
+    private _factorizadorDeMatrices : FactorizadorDeMatrices = new FactorizadorDeMatrices();
 
     public onCreate():void{
 
@@ -18,6 +19,9 @@ class ApplicationController{
 
         this._botonGenerarCampos.addEventListener("click", (event : Event)=>{
             event.preventDefault();
+            document.getElementById("input-super-contenedor")!.classList.remove("display-none");
+            document.getElementById("input-super-contenedor")!.classList.add("flex");
+            document.getElementById("input-super-contenedor")!.classList.add("flex-column")
             this.generarCampos(this._barraSelectora.value as unknown as number);
         });
 
@@ -29,7 +33,7 @@ class ApplicationController{
     }
 
     private generarCampos(n : number):void{
-        let contenedor : HTMLDivElement = document.getElementById("Hola")! as HTMLDivElement;
+        let contenedor : HTMLDivElement = document.getElementById("input-contenedor")! as HTMLDivElement;
         contenedor.innerHTML = "";
 
         let tabla :HTMLTableElement = document.createElement("table");
@@ -53,6 +57,19 @@ class ApplicationController{
         contenedor.append(tabla);
 
         let tabla2 :HTMLTableElement = document.createElement("table");
+
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+            let span : HTMLSpanElement = document.createElement("span");
+            let celda : HTMLTableCellElement = document.createElement("td");
+            span.innerHTML = "X" + (i+1);
+            celda.append(span);
+            fila.append(celda);
+            tabla2.append(fila);
+        }
+        contenedor.append(tabla2);  
+
+        let tabla3 :HTMLTableElement = document.createElement("table");
         this._elementosVectorB= [];
 
         for(let i : number = 0; i < n; i++){
@@ -63,9 +80,9 @@ class ApplicationController{
             this._elementosVectorB[i] = input;
             celda.append(input);
             fila.append(celda);
-            tabla2.append(fila);
+            tabla3.append(fila);
         }
-        contenedor.append(tabla2);    
+        contenedor.append(tabla3);    
     }
 
     private resolverSistema(n : number){
@@ -93,4 +110,5 @@ class ApplicationController{
     }
 }
 
-new ApplicationController().onCreate;
+let thisPageApplicationController : ApplicationController = new ApplicationController();
+thisPageApplicationController.onCreate();

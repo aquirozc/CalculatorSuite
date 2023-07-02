@@ -9,27 +9,37 @@
     </head>
     <body>
 
-        <h1>Resolución de sistemas de ecuaciones mediante Factorización LU</h1>
+        <main>
 
-        <form id="form-1">
+            <h1>Resolución de sistemas de ecuaciones mediante Factorización LU</h1>
 
-            <label for="campo-n">Seleccione la dimensión del sistema de ecuaciones(El numero de variables y/o ecuaciones):</label>
+            <form class="flex flex-column">
 
-            <div>
+                <label for="campo-n">Seleccione la dimensión del sistema de ecuaciones(El numero de variables y/o ecuaciones):</label>
 
-                <input type="range" name="campo-n" id="campo-n" min="1" max="10" step="1">
+                <div>
 
-                <span id="etiqueta-n">10</span>
+                    <input type="range" name="campo-n" id="campo-n" min="0" max="10" step="1" value="3">
+
+                    <span>3</span>
+
+                </div>
+
+                <button id="btn-generar-campos">Siguiente</button>
+
+            </form>
+
+            <div id="input-super-contenedor" class="display-none">
+
+                <div id="input-contenedor" class="flex">
+
+                </div>
+
+                <button id="btn-resolver-sistema">Siguiente</button>
 
             </div>
 
-            <button id="btn-siguiente">Siguiente</button>
-
-        </form>
-
-        <div id="Hola"></div>
-
-        <button id="btn-siguiente2">Siguiente</button>
+        </main>
         
     </body>
 

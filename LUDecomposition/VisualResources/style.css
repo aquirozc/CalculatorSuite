@@ -4,25 +4,30 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-#form-1 {
-
-    display: flex;
+.flex-column {
     flex-direction: column;
-
 }
 
-#form-1 > div {
-
+.flex{
     display: flex;
-
 }
 
-#form-1 > div > input {
+.display-none{
+    display: none
+}
 
+.display-block{
+    display: block;
+}
+
+main form:first-of-type div {
+    display: flex;
+}
+
+input {
     width: 100%;
-
 }
 
-#Hola{
-    display: flex;
+#input-contenedor{
+    justify-content: center;
 }
