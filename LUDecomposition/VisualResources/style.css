@@ -31,3 +31,7 @@ input {
 #input-contenedor{
     justify-content: center;
 }
+
+#super-contenedor-solucion > div:first-of-type > div{
+    flex-grow: 1;
+}

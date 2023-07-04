@@ -8,7 +8,7 @@ var ApplicationController = /** @class */ (function () {
         this._barraSelectora = document.getElementById("campo-n");
         this._botonGenerarCampos = document.getElementById("btn-generar-campos");
         this._botonResolverSistema = document.getElementById("btn-resolver-sistema");
-        this._factorizadorDeMatrices = new CoreEngine_1.FactorizadorDeMatrices();
+        this._factorizadorDeMatrices = new CoreEngine_1.FactorizadorDeMatrices(this);
     }
     ApplicationController.prototype.onCreate = function () {
         var _this = this;
@@ -49,10 +49,8 @@ var ApplicationController = /** @class */ (function () {
         var tabla2 = document.createElement("table");
         for (var i = 0; i < n; i++) {
             var fila = document.createElement("tr");
-            var span = document.createElement("span");
             var celda = document.createElement("td");
-            span.innerHTML = "X" + (i + 1);
-            celda.append(span);
+            celda.innerHTML = "X" + (i + 1);
             fila.append(celda);
             tabla2.append(fila);
         }
@@ -71,7 +69,62 @@ var ApplicationController = /** @class */ (function () {
         }
         contenedor.append(tabla3);
     };
+    ApplicationController.prototype.mostrarDesglose = function (paso, matriz, idContenedor) {
+        var contenedor = document.getElementById(idContenedor);
+        var tabla = document.createElement("table");
+        var sub = document.createElement("h3");
+        sub.innerHTML = "Paso " + paso;
+        for (var i = 0; i < matriz.length; i++) {
+            var fila = document.createElement("tr");
+            for (var j = 0; j < matriz.length; j++) {
+                var celda = document.createElement("td");
+                celda.innerHTML = matriz[i][j] + "";
+                fila.append(celda);
+            }
+            tabla.append(fila);
+        }
+        contenedor.appendChild(sub);
+        contenedor.append(tabla);
+    };
+    ApplicationController.prototype.mostrarResultados = function (variable, matriz, vector, idContenedor) {
+        var n = matriz.length;
+        var contenedor = document.getElementById(idContenedor);
+        contenedor.innerHTML = "";
+        var tabla = document.createElement("table");
+        for (var i = 0; i < n; i++) {
+            var fila = document.createElement("tr");
+            for (var j = 0; j < n; j++) {
+                var celda = document.createElement("td");
+                celda.innerHTML = matriz[i][j] + "";
+                fila.append(celda);
+            }
+            tabla.append(fila);
+        }
+        contenedor.append(tabla);
+        var tabla2 = document.createElement("table");
+        for (var i = 0; i < n; i++) {
+            var fila = document.createElement("tr");
+            var celda = document.createElement("td");
+            celda.innerHTML = variable + (i + 1);
+            fila.append(celda);
+            tabla2.append(fila);
+        }
+        contenedor.append(tabla2);
+        var tabla3 = document.createElement("table");
+        for (var i = 0; i < n; i++) {
+            var fila = document.createElement("tr");
+            var celda = document.createElement("td");
+            celda.innerHTML = vector[i] + "";
+            fila.append(celda);
+            tabla3.append(fila);
+        }
+        contenedor.append(tabla3);
+    };
     ApplicationController.prototype.resolverSistema = function (n) {
+        document.getElementById("super-contenedor-solucion").classList.remove("display-none");
+        document.getElementById("super-contenedor-solucion").classList.add("display-block");
+        document.getElementById("contenedor-solucion-matriz-l").innerHTML = "";
+        document.getElementById("contenedor-solucion-matriz-u").innerHTML = "";
         var matrizA = [];
         var vectorB = [];
         for (var i = 0; i < n; i++) {
@@ -85,10 +138,8 @@ var ApplicationController = /** @class */ (function () {
         }
         this._factorizadorDeMatrices.factorizarMatrizOriginal(matrizA);
         this._factorizadorDeMatrices.resolverSistemaDeEcuaciones(vectorB);
-        console.log("Matriz L", this._factorizadorDeMatrices.matrizL);
-        console.log("Matriz U", this._factorizadorDeMatrices.matrizU);
-        console.log("Vector X", this._factorizadorDeMatrices.vectorX);
-        console.log("Vector X", this._factorizadorDeMatrices.vectorY);
+        this.mostrarResultados("Y", this._factorizadorDeMatrices.matrizL, this._factorizadorDeMatrices.vectorY, "contenedor-solucion-vector-y");
+        this.mostrarResultados("X", this._factorizadorDeMatrices.matrizU, this._factorizadorDeMatrices.vectorX, "contenedor-solucion-vector-x");
     };
     return ApplicationController;
 }());
@@ -101,27 +152,34 @@ thisPageApplicationController.onCreate();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FactorizadorDeMatrices = void 0;
 var FactorizadorDeMatrices = /** @class */ (function () {
-    function FactorizadorDeMatrices() {
+    function FactorizadorDeMatrices(c) {
+        this.controller = c;
     }
     FactorizadorDeMatrices.prototype.factorizarMatrizOriginal = function (matrizA) {
+        var contador = 0;
         this.dimension = matrizA.length;
         this._matrizU = matrizA;
-        this._matrizL = this.inicializarMatrizVacia(this._matrizL, this.dimension);
+        this._matrizL = this.generarMatrizDeIdentidad(this._matrizL, this.dimension);
         for (var i = 0; i < this.dimension; i++) {
-            this._matrizL[i][i] = 1;
             for (var j = i + 1; j < this.dimension; j++) {
                 var pivote = this._matrizU[j][i] / this._matrizU[i][i];
                 this._matrizL[j][i] = pivote;
                 for (var k = 0; k < this.dimension; k++) {
                     this._matrizU[j][k] = this._matrizU[j][k] - (pivote * this._matrizU[i][k]);
                 }
+                contador++;
+                this.controller.mostrarDesglose(contador, this.matrizL, "contenedor-solucion-matriz-l");
+                this.controller.mostrarDesglose(contador, this.matrizU, "contenedor-solucion-matriz-u");
             }
         }
     };
-    FactorizadorDeMatrices.prototype.inicializarMatrizVacia = function (matriz, n) {
+    FactorizadorDeMatrices.prototype.generarMatrizDeIdentidad = function (matriz, n) {
         matriz = [];
         for (var i = 0; i < n; i++) {
             matriz[i] = [];
+            for (var j = 0; j < n; j++) {
+                matriz[i][j] = (i == j) ? 1 : 0;
+            }
         }
         return matriz;
     };

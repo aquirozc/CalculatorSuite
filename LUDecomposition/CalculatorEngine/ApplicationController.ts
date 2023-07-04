@@ -8,7 +8,7 @@ class ApplicationController{
     private _botonResolverSistema : HTMLButtonElement = document.getElementById("btn-resolver-sistema")! as HTMLButtonElement;
     private _elementosMatrizA : HTMLInputElement[][];
     private _elementosVectorB : HTMLInputElement[];
-    private _factorizadorDeMatrices : FactorizadorDeMatrices = new FactorizadorDeMatrices();
+    private _factorizadorDeMatrices : FactorizadorDeMatrices = new FactorizadorDeMatrices(this);
 
     public onCreate():void{
 
@@ -60,10 +60,8 @@ class ApplicationController{
 
         for(let i : number = 0; i < n; i++){
             let fila : HTMLTableRowElement = document.createElement("tr");
-            let span : HTMLSpanElement = document.createElement("span");
             let celda : HTMLTableCellElement = document.createElement("td");
-            span.innerHTML = "X" + (i+1);
-            celda.append(span);
+            celda.innerHTML = "X" + (i+1);
             fila.append(celda);
             tabla2.append(fila);
         }
@@ -85,7 +83,78 @@ class ApplicationController{
         contenedor.append(tabla3);    
     }
 
-    private resolverSistema(n : number){
+    public mostrarDesglose(paso : number,matriz : number[][],idContenedor:string):void{
+
+        let contenedor = document.getElementById(idContenedor)!;
+        let tabla :HTMLTableElement = document.createElement("table");
+        let sub  = document.createElement("h3");
+        sub.innerHTML = "Paso " + paso;
+
+        for(let i : number = 0; i < matriz.length; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+
+            for(let j : number = 0; j < matriz.length; j++){
+                let celda : HTMLTableCellElement = document.createElement("td");
+                celda.innerHTML = matriz[i][j] + "";
+                fila.append(celda);
+            }
+            tabla.append(fila);
+        }
+        
+        contenedor.appendChild(sub);
+        contenedor.append(tabla);
+    }
+
+    public mostrarResultados(variable:string, matriz:number[][],vector:number[],idContenedor:string):void{
+        let n = matriz.length;
+        let contenedor = document.getElementById(idContenedor)!;
+        contenedor.innerHTML = "";
+
+        let tabla :HTMLTableElement = document.createElement("table");
+
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+            for(let j : number = 0; j < n; j++){
+                let celda : HTMLTableCellElement = document.createElement("td");
+                celda.innerHTML = matriz[i][j] + "";
+                fila.append(celda);
+            }
+            tabla.append(fila);
+        }
+
+        contenedor.append(tabla);
+
+        let tabla2 :HTMLTableElement = document.createElement("table");
+
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+            let celda : HTMLTableCellElement = document.createElement("td");
+            celda.innerHTML = variable + (i+1);
+            fila.append(celda);
+            tabla2.append(fila);
+        }
+        contenedor.append(tabla2);  
+
+        let tabla3 :HTMLTableElement = document.createElement("table");
+
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+            let celda : HTMLTableCellElement = document.createElement("td");
+            celda.innerHTML = vector[i] + "";
+            fila.append(celda);
+            tabla3.append(fila);
+        }
+        contenedor.append(tabla3);
+
+    }
+
+    private resolverSistema(n : number):void{
+
+        document.getElementById("super-contenedor-solucion")!.classList.remove("display-none")
+        document.getElementById("super-contenedor-solucion")!.classList.add("display-block")
+        document.getElementById("contenedor-solucion-matriz-l")!.innerHTML = "";
+        document.getElementById("contenedor-solucion-matriz-u")!.innerHTML = "";
+
         let matrizA : number[][] = [];
         let vectorB : number[] = [];
 
@@ -99,14 +168,13 @@ class ApplicationController{
         for(let i : number = 0; i < n; i++){
             vectorB[i] = this._elementosVectorB[i].value as unknown as number;
         }
-
+        
         this._factorizadorDeMatrices.factorizarMatrizOriginal(matrizA);
         this._factorizadorDeMatrices.resolverSistemaDeEcuaciones(vectorB);
+        this.mostrarResultados("Y",this._factorizadorDeMatrices.matrizL,this._factorizadorDeMatrices.vectorY,"contenedor-solucion-vector-y");
+        this.mostrarResultados("X",this._factorizadorDeMatrices.matrizU,this._factorizadorDeMatrices.vectorX,"contenedor-solucion-vector-x");
 
-        console.log("Matriz L",this._factorizadorDeMatrices.matrizL);
-        console.log("Matriz U",this._factorizadorDeMatrices.matrizU);
-        console.log("Vector X",this._factorizadorDeMatrices.vectorX);
-        console.log("Vector X",this._factorizadorDeMatrices.vectorY);
+        
     }
 }
 

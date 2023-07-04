@@ -3,20 +3,25 @@ import { ApplicationController } from "./ApplicationController";
 
 class FactorizadorDeMatrices{
     
+    private controller : ApplicationController;
     private dimension : number;
     private _matrizL : number[][];
     private _matrizU : number[][];
     private _vectorX : number[];
     private _vectorY : number[];
 
+    constructor(c : ApplicationController){
+        this.controller = c;
+    }
+
     public factorizarMatrizOriginal(matrizA : number[][]) : void{
+        let contador : number = 0;
         this.dimension = matrizA.length;
         this._matrizU = matrizA;
-        this._matrizL = this.inicializarMatrizVacia(this._matrizL,this.dimension);
+        this._matrizL = this.generarMatrizDeIdentidad(this._matrizL,this.dimension);
 
         for(let i : number = 0; i < this.dimension; i++){
-            this._matrizL[i][i]=1;
-
+            
             for(let j : number = i + 1; j < this.dimension; j++){
                 let pivote : number = this._matrizU[j][i]/this._matrizU[i][i];
                 this._matrizL[j][i] = pivote;
@@ -24,14 +29,20 @@ class FactorizadorDeMatrices{
                 for(let k : number = 0; k < this.dimension; k++){
                     this._matrizU[j][k] = this._matrizU[j][k] - (pivote * this._matrizU[i][k]);
                 }
+                contador++;
+                this.controller.mostrarDesglose(contador,this.matrizL,"contenedor-solucion-matriz-l");
+                this.controller.mostrarDesglose(contador,this.matrizU,"contenedor-solucion-matriz-u");
             }
         }
     }
 
-    private inicializarMatrizVacia(matriz:number[][], n : number) : number[][]{
+    private generarMatrizDeIdentidad(matriz:number[][], n : number) : number[][]{
         matriz = [];
         for(let i : number = 0; i < n; i++){
             matriz[i] = [];
+            for (let j : number = 0; j < n; j++){
+                matriz[i][j] = (i==j) ? 1 : 0; 
+            }
         }
         return matriz;
     }
