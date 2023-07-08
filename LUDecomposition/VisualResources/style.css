@@ -1,37 +1,78 @@
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+*{
+    box-sizing: border-box;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
-.flex-column {
-    flex-direction: column;
+body{
+    min-height: 100vh;
 }
 
-.flex{
-    display: flex;
+main{
+    border-radius: 0.5em;
+    background-color: rgb(28, 28, 28);
+    padding: 3vw 2.5vw;
+    width: 100vw;
 }
 
-.display-none{
-    display: none
+main > h1{
+    margin-bottom: 25px;
 }
 
-.display-block{
-    display: block;
+div:has(#seleccion-dimension){
+    height: 60px;
+    align-items: center;
 }
 
-main form:first-of-type div {
-    display: flex;
+#seleccion-dimension{
+    appearance: none;
+    background: linear-gradient(90deg, rgb(0, 120, 215) 12.5%, rgb(153, 153, 153) 12.5%);
+    border-radius: 18px;
+    height: 4px;
+    flex-grow: 1;
+    margin-right: 10px;
 }
 
-input {
-    width: 100%;
+#seleccion-dimension::-webkit-slider-thumb{
+    appearance: none;
+    background-color: #0078D7;
+    border: 5px solid white;
+    border-radius: 10px;
+    box-shadow:none;
+    cursor: pointer;
+    height: 20px;
+    user-select: none;
+    width: 20px;
+    --webkit-appearance : none;
+}
+
+button{
+    background-color: #0078D7;
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-bottom-color: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    font-size: 15px;
+    padding: 6px 18px;
+}
+
+#input-super-contenedor{
+    height: 0;
+    overflow: hidden;
+    transition: all 0.5s;
 }
 
 #input-contenedor{
-    justify-content: center;
+    margin: 10px 0;
 }
 
-#super-contenedor-solucion > div:first-of-type > div{
-    flex-grow: 1;
+#input-super-contenedor div:nth-of-type(2){
+    justify-content: flex-end;
+}
+
+#input-super-contenedor div:nth-of-type(2) button:not(:nth-child(3)){
+    background-color: rgb(54, 54, 54);
+    margin-right: 10px;
 }

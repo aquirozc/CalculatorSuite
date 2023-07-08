@@ -5,7 +5,7 @@ exports.ApplicationController = void 0;
 var CoreEngine_1 = require("./CoreEngine");
 var ApplicationController = /** @class */ (function () {
     function ApplicationController() {
-        this._barraSelectora = document.getElementById("campo-n");
+        this._barraSelectora = document.getElementById("seleccion-dimension");
         this._botonGenerarCampos = document.getElementById("btn-generar-campos");
         this._botonResolverSistema = document.getElementById("btn-resolver-sistema");
         this._factorizadorDeMatrices = new CoreEngine_1.FactorizadorDeMatrices(this);
@@ -13,13 +13,15 @@ var ApplicationController = /** @class */ (function () {
     ApplicationController.prototype.onCreate = function () {
         var _this = this;
         this._barraSelectora.addEventListener("input", function () {
+            var valor = _this._barraSelectora.value;
+            var min = _this._barraSelectora.min;
+            var max = _this._barraSelectora.max;
+            var porcentaje = (valor - min) / (max - min) * 100;
             _this._barraSelectora.nextElementSibling.innerHTML = _this._barraSelectora.value;
+            _this._barraSelectora.style.background = "linear-gradient(90deg, #0078D7 ".concat(porcentaje, "%, #999999 ").concat(porcentaje, "%)");
         });
         this._botonGenerarCampos.addEventListener("click", function (event) {
             event.preventDefault();
-            document.getElementById("input-super-contenedor").classList.remove("display-none");
-            document.getElementById("input-super-contenedor").classList.add("flex");
-            document.getElementById("input-super-contenedor").classList.add("flex-column");
             _this.generarCampos(_this._barraSelectora.value);
         });
         this._botonResolverSistema.addEventListener("click", function (event) {
@@ -68,6 +70,8 @@ var ApplicationController = /** @class */ (function () {
             tabla3.append(fila);
         }
         contenedor.append(tabla3);
+        document.getElementById("input-super-contenedor").style.height = (20 + 30 + 25 + n * 40) + "px";
+        ;
     };
     ApplicationController.prototype.mostrarDesglose = function (paso, matriz, idContenedor) {
         var contenedor = document.getElementById(idContenedor);

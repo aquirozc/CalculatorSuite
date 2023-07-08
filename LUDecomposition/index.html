@@ -1,72 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <link rel="stylesheet" href="VisualResources/style.css">
+        <link rel="stylesheet" href="VisualResources/commonStyles.css">
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Factorización LU</title>
-        <link rel="stylesheet" href="./VisualResources/style.css">
+        <title>Solucionador de sistemas de ecuaciones</title>
     </head>
-    <body>
-
+    <body class="flex flx-center-main-axis flx-center-cross-axis">
         <main>
-
-            <h1>Resolución de sistemas de ecuaciones mediante Factorización LU</h1>
-
-            <form class="flex flex-column">
-
-                <label for="campo-n">Seleccione la dimensión del sistema de ecuaciones(El numero de variables y/o ecuaciones):</label>
-
-                <div>
-
-                    <input type="range" name="campo-n" id="campo-n" min="0" max="10" step="1" value="3">
-
-                    <span>3</span>
-
-                </div>
-
-                <button id="btn-generar-campos">Siguiente</button>
-
-            </form>
-
-            <div id="input-super-contenedor" class="display-none">
-
-                <div id="input-contenedor" class="flex">
-
-                </div>
-
-                <button id="btn-resolver-sistema">Siguiente</button>
-
-            </div>
-
-            <div id="super-contenedor-solucion" class="display-none">
-                
+            <h1>Solucionador de sistemas de ecuaciones</h1>
+            <form class="flex flx-column">
+                <label for="seleccion-dimension">Escoja la dimensión del sistema</label>
                 <div class="flex">
-                    <div>
-                        <h2>Obtención de la Matriz L</h2>
-                        <div id="contenedor-solucion-matriz-l"></div>
-                    </div>
-                    <div>
-                        <h2>Obtención de la Matriz U</h2>
-                        <div id="contenedor-solucion-matriz-u"></div>
-                    </div>
+                    <input type="range" id="seleccion-dimension" value="3" min="2" max="10" step="1">
+                    <span>3</span>
                 </div>
-
-                <div>
-                    <h2>Cálculo del vector Y</h2>
-                    <div id="contenedor-solucion-vector-y" class="flex"></div>
+                <div class="flex">
+                    <div style="flex-grow: 1;"></div>
+                    <button id="btn-generar-campos">Siguiente</button>
                 </div>
-                <div>
-                    <h2>Cálculo del vector X</h2>
-                    <div id="contenedor-solucion-vector-x" class="flex"></div>
+            </form>
+            <div id="input-super-contenedor" class="flex flx-column">
+                <p>Ingrese los valores constantes del sistema: </p>
+                <div id="input-contenedor" class="flex flx-center-main-axis"></div>
+                <div class="flex">
+                    <button>Resetear</button>
+                    <button>Rellenar con ceros</button>
+                    <button id="btn-resolver-sistema">Siguiente</button>
                 </div>
-                
             </div>
-
         </main>
-        
     </body>
-
-    <script src="./CalculatorEngine/prodReadyBundle.js"></script>
-
+    <script src="CalculatorEngine/prodReadyBundle.js"></script>
 </html>

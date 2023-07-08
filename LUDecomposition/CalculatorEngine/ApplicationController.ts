@@ -3,7 +3,7 @@ import { FactorizadorDeMatrices } from "./CoreEngine";
 
 class ApplicationController{
 
-    private _barraSelectora : HTMLInputElement = document.getElementById("campo-n")! as HTMLInputElement;
+    private _barraSelectora : HTMLInputElement = document.getElementById("seleccion-dimension")! as HTMLInputElement;
     private _botonGenerarCampos : HTMLButtonElement = document.getElementById("btn-generar-campos")! as HTMLButtonElement;
     private _botonResolverSistema : HTMLButtonElement = document.getElementById("btn-resolver-sistema")! as HTMLButtonElement;
     private _elementosMatrizA : HTMLInputElement[][];
@@ -14,14 +14,16 @@ class ApplicationController{
 
         this._barraSelectora.addEventListener("input",
         ()=>{
-            this._barraSelectora.nextElementSibling!.innerHTML = this._barraSelectora.value
+            let valor :number = this._barraSelectora.value as unknown as number; 
+            let min : number = this._barraSelectora.min as unknown as number;
+            let max : number = this._barraSelectora.max as unknown as number;
+            let porcentaje  : number= (valor-min)/(max-min)*100;
+            this._barraSelectora.nextElementSibling!.innerHTML = this._barraSelectora.value;
+            this._barraSelectora.style.background=`linear-gradient(90deg, #0078D7 ${porcentaje}%, #999999 ${porcentaje}%)`;
         });
 
         this._botonGenerarCampos.addEventListener("click", (event : Event)=>{
             event.preventDefault();
-            document.getElementById("input-super-contenedor")!.classList.remove("display-none");
-            document.getElementById("input-super-contenedor")!.classList.add("flex");
-            document.getElementById("input-super-contenedor")!.classList.add("flex-column")
             this.generarCampos(this._barraSelectora.value as unknown as number);
         });
 
@@ -80,7 +82,8 @@ class ApplicationController{
             fila.append(celda);
             tabla3.append(fila);
         }
-        contenedor.append(tabla3);    
+        contenedor.append(tabla3);   
+        document.getElementById("input-super-contenedor")!.style.height = (20 +30 + 25 + n*40)+ "px";; 
     }
 
     public mostrarDesglose(paso : number,matriz : number[][],idContenedor:string):void{
