@@ -8,13 +8,14 @@
 
 body{
     min-height: 100vh;
+    background-image: url('FirstLogonBackground.png');
 }
 
 main{
-    border-radius: 0.5em;
+    border-radius: 0.8em;
     background-color: rgb(28, 28, 28);
     padding: 3vw 2.5vw;
-    width: 100vw;
+    width: 90vw;
 }
 
 main > h1{
@@ -52,7 +53,7 @@ button{
     background-color: #0078D7;
     border: 1px solid;
     border-color: rgba(255, 255, 255, 0.08);
-    border-bottom-color: rgba(0, 0, 0, 0.8);
+    border-bottom-color: rgba(0, 0, 0, 0.6);
     border-radius: 4px;
     font-size: 15px;
     padding: 6px 18px;
@@ -61,7 +62,7 @@ button{
 #input-super-contenedor{
     height: 0;
     overflow: hidden;
-    transition: all 0.5s;
+    transition: all 0.66s;
 }
 
 #input-contenedor{
@@ -75,4 +76,30 @@ button{
 #input-super-contenedor div:nth-of-type(2) button:not(:nth-child(3)){
     background-color: rgb(54, 54, 54);
     margin-right: 10px;
+}
+
+#super-contenedor-solucion > label{
+    height: 70px;
+    margin-top: 15px;
+    border-radius: 8px;
+    padding: 0.5em;
+    background-color: rgb(42, 42, 42);
+}
+
+#super-contenedor-solucion > div{
+    height: 0;
+    overflow: hidden;
+    transition: all 0.66s;
+
+    border-top: 3px solid rgb(28, 28, 28);
+    border-radius: 8px;
+    background-color: rgb(52,52, 52);
+}
+
+#super-contenedor-solucion div > div{
+    padding: 0.88em;
+}
+
+#super-contenedor-matrices > div{
+    flex-grow: 1;
 }

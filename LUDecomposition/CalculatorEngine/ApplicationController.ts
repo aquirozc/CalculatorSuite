@@ -6,6 +6,9 @@ class ApplicationController{
     private _barraSelectora : HTMLInputElement = document.getElementById("seleccion-dimension")! as HTMLInputElement;
     private _botonGenerarCampos : HTMLButtonElement = document.getElementById("btn-generar-campos")! as HTMLButtonElement;
     private _botonResolverSistema : HTMLButtonElement = document.getElementById("btn-resolver-sistema")! as HTMLButtonElement;
+    private _botonMostrarVectorX : HTMLInputElement = document.getElementById("mostrar-contenedor-vector-x")! as HTMLInputElement;
+    private _botonMostrarVectorY : HTMLInputElement = document.getElementById("mostrar-contenedor-vector-y")! as HTMLInputElement;
+    private _botonMostrarMatrices : HTMLInputElement = document.getElementById("mostrar-contenedor-matrices")! as HTMLInputElement;
     private _elementosMatrizA : HTMLInputElement[][];
     private _elementosVectorB : HTMLInputElement[];
     private _factorizadorDeMatrices : FactorizadorDeMatrices = new FactorizadorDeMatrices(this);
@@ -30,6 +33,28 @@ class ApplicationController{
         this._botonResolverSistema.addEventListener("click", (event : Event)=>{
             event.preventDefault();
             this.resolverSistema(this._barraSelectora.value as unknown as number);
+        });
+
+        this._botonMostrarVectorX.addEventListener("click", () =>{
+            let contenedor : HTMLDivElement = document.getElementById("contenedor-solucion-vector-x")! as HTMLDivElement;
+            let superContenedor : HTMLDivElement = document.getElementById("super-contenedor-vector-x")! as HTMLDivElement;
+            let newHeight : number = this._botonMostrarVectorX.checked ? contenedor.clientHeight : 0;
+            superContenedor.style.height = newHeight + "px";
+        });
+
+        this._botonMostrarVectorY.addEventListener("click", () =>{
+            let contenedor : HTMLDivElement = document.getElementById("contenedor-solucion-vector-y")! as HTMLDivElement;
+            let superContenedor : HTMLDivElement = document.getElementById("super-contenedor-vector-y")! as HTMLDivElement;
+            let newHeight : number = this._botonMostrarVectorY.checked ? contenedor.clientHeight : 0;
+            superContenedor.style.height = newHeight + "px";
+        });
+
+        this._botonMostrarMatrices.addEventListener("click", () =>{
+            let contenedor : HTMLDivElement = document.getElementById("contenedor-solucion-matrices")! as HTMLDivElement;
+            let superContenedor : HTMLDivElement = document.getElementById("super-contenedor-matrices")! as HTMLDivElement;
+            let newHeight : number = this._botonMostrarMatrices.checked ? contenedor.clientHeight : 0;
+            console.log(this._botonMostrarVectorX.checked);
+            superContenedor.style.height = newHeight + "px";
         });
 
     }
@@ -83,7 +108,7 @@ class ApplicationController{
             tabla3.append(fila);
         }
         contenedor.append(tabla3);   
-        document.getElementById("input-super-contenedor")!.style.height = (20 +30 + 25 + n*40)+ "px";; 
+        document.getElementById("input-super-contenedor")!.style.height = (contenedor.clientHeight + 80) + "px";; 
     }
 
     public mostrarDesglose(paso : number,matriz : number[][],idContenedor:string):void{
@@ -98,7 +123,10 @@ class ApplicationController{
 
             for(let j : number = 0; j < matriz.length; j++){
                 let celda : HTMLTableCellElement = document.createElement("td");
-                celda.innerHTML = matriz[i][j] + "";
+                let input : HTMLInputElement = document.createElement("input");
+                input.type = "number";
+                input.value = matriz[i][j] + "";
+                celda.append(input);
                 fila.append(celda);
             }
             tabla.append(fila);
@@ -108,7 +136,7 @@ class ApplicationController{
         contenedor.append(tabla);
     }
 
-    public mostrarResultados(variable:string, matriz:number[][],vector:number[],idContenedor:string):void{
+    public mostrarResultados(variable:string, matriz:number[][],vector:number[],solucion:number[],idContenedor:string):void{
         let n = matriz.length;
         let contenedor = document.getElementById(idContenedor)!;
         contenedor.innerHTML = "";
@@ -119,7 +147,10 @@ class ApplicationController{
             let fila : HTMLTableRowElement = document.createElement("tr");
             for(let j : number = 0; j < n; j++){
                 let celda : HTMLTableCellElement = document.createElement("td");
-                celda.innerHTML = matriz[i][j] + "";
+                let input : HTMLInputElement = document.createElement("input");
+                input.type = "number";
+                input.value = matriz[i][j] + "";
+                celda.append(input);
                 fila.append(celda);
             }
             tabla.append(fila);
@@ -143,18 +174,50 @@ class ApplicationController{
         for(let i : number = 0; i < n; i++){
             let fila : HTMLTableRowElement = document.createElement("tr");
             let celda : HTMLTableCellElement = document.createElement("td");
-            celda.innerHTML = vector[i] + "";
+            let input : HTMLInputElement = document.createElement("input");
+            input.type = "number";
+            input.value = vector[i] + "";
+            celda.append(input);
             fila.append(celda);
             tabla3.append(fila);
         }
         contenedor.append(tabla3);
 
+        let spanner : HTMLDivElement = document.createElement("div");
+        spanner.classList.add("flx-grow1");
+        contenedor.append(spanner)
+
+        let tabla4 :HTMLTableElement = document.createElement("table");
+
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+            let celda : HTMLTableCellElement = document.createElement("td");
+            celda.innerHTML = variable + (i+1) + " = ";
+            fila.append(celda);
+            tabla4.append(fila);
+        }
+        contenedor.append(tabla4);  
+
+        let tabla5 :HTMLTableElement = document.createElement("table");
+
+        for(let i : number = 0; i < n; i++){
+            let fila : HTMLTableRowElement = document.createElement("tr");
+            let celda : HTMLTableCellElement = document.createElement("td");
+            let input : HTMLInputElement = document.createElement("input");
+            input.type = "number";
+            input.value = solucion[i] + "";
+            celda.append(input);
+            fila.append(celda);
+            tabla5.append(fila);
+        }
+        contenedor.append(tabla5);
+
     }
 
     private resolverSistema(n : number):void{
 
-        document.getElementById("super-contenedor-solucion")!.classList.remove("display-none")
-        document.getElementById("super-contenedor-solucion")!.classList.add("display-block")
+        document.getElementById("super-contenedor-solucion")!.classList.remove("dsp-none")
+        document.getElementById("super-contenedor-solucion")!.classList.add("flex")
         document.getElementById("contenedor-solucion-matriz-l")!.innerHTML = "";
         document.getElementById("contenedor-solucion-matriz-u")!.innerHTML = "";
 
@@ -174,8 +237,8 @@ class ApplicationController{
         
         this._factorizadorDeMatrices.factorizarMatrizOriginal(matrizA);
         this._factorizadorDeMatrices.resolverSistemaDeEcuaciones(vectorB);
-        this.mostrarResultados("Y",this._factorizadorDeMatrices.matrizL,this._factorizadorDeMatrices.vectorY,"contenedor-solucion-vector-y");
-        this.mostrarResultados("X",this._factorizadorDeMatrices.matrizU,this._factorizadorDeMatrices.vectorX,"contenedor-solucion-vector-x");
+        this.mostrarResultados("Y",this._factorizadorDeMatrices.matrizL,vectorB,this._factorizadorDeMatrices.vectorY,"contenedor-solucion-vector-y");
+        this.mostrarResultados("X",this._factorizadorDeMatrices.matrizU,this._factorizadorDeMatrices.vectorY,this._factorizadorDeMatrices.vectorX,"contenedor-solucion-vector-x");
 
         
     }

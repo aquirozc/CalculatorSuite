@@ -8,6 +8,9 @@ var ApplicationController = /** @class */ (function () {
         this._barraSelectora = document.getElementById("seleccion-dimension");
         this._botonGenerarCampos = document.getElementById("btn-generar-campos");
         this._botonResolverSistema = document.getElementById("btn-resolver-sistema");
+        this._botonMostrarVectorX = document.getElementById("mostrar-contenedor-vector-x");
+        this._botonMostrarVectorY = document.getElementById("mostrar-contenedor-vector-y");
+        this._botonMostrarMatrices = document.getElementById("mostrar-contenedor-matrices");
         this._factorizadorDeMatrices = new CoreEngine_1.FactorizadorDeMatrices(this);
     }
     ApplicationController.prototype.onCreate = function () {
@@ -27,6 +30,25 @@ var ApplicationController = /** @class */ (function () {
         this._botonResolverSistema.addEventListener("click", function (event) {
             event.preventDefault();
             _this.resolverSistema(_this._barraSelectora.value);
+        });
+        this._botonMostrarVectorX.addEventListener("click", function () {
+            var contenedor = document.getElementById("contenedor-solucion-vector-x");
+            var superContenedor = document.getElementById("super-contenedor-vector-x");
+            var newHeight = _this._botonMostrarVectorX.checked ? contenedor.clientHeight : 0;
+            superContenedor.style.height = newHeight + "px";
+        });
+        this._botonMostrarVectorY.addEventListener("click", function () {
+            var contenedor = document.getElementById("contenedor-solucion-vector-y");
+            var superContenedor = document.getElementById("super-contenedor-vector-y");
+            var newHeight = _this._botonMostrarVectorY.checked ? contenedor.clientHeight : 0;
+            superContenedor.style.height = newHeight + "px";
+        });
+        this._botonMostrarMatrices.addEventListener("click", function () {
+            var contenedor = document.getElementById("contenedor-solucion-matrices");
+            var superContenedor = document.getElementById("super-contenedor-matrices");
+            var newHeight = _this._botonMostrarMatrices.checked ? contenedor.clientHeight : 0;
+            console.log(_this._botonMostrarVectorX.checked);
+            superContenedor.style.height = newHeight + "px";
         });
     };
     ApplicationController.prototype.generarCampos = function (n) {
@@ -70,7 +92,7 @@ var ApplicationController = /** @class */ (function () {
             tabla3.append(fila);
         }
         contenedor.append(tabla3);
-        document.getElementById("input-super-contenedor").style.height = (20 + 30 + 25 + n * 40) + "px";
+        document.getElementById("input-super-contenedor").style.height = (contenedor.clientHeight + 80) + "px";
         ;
     };
     ApplicationController.prototype.mostrarDesglose = function (paso, matriz, idContenedor) {
@@ -82,7 +104,10 @@ var ApplicationController = /** @class */ (function () {
             var fila = document.createElement("tr");
             for (var j = 0; j < matriz.length; j++) {
                 var celda = document.createElement("td");
-                celda.innerHTML = matriz[i][j] + "";
+                var input = document.createElement("input");
+                input.type = "number";
+                input.value = matriz[i][j] + "";
+                celda.append(input);
                 fila.append(celda);
             }
             tabla.append(fila);
@@ -90,7 +115,7 @@ var ApplicationController = /** @class */ (function () {
         contenedor.appendChild(sub);
         contenedor.append(tabla);
     };
-    ApplicationController.prototype.mostrarResultados = function (variable, matriz, vector, idContenedor) {
+    ApplicationController.prototype.mostrarResultados = function (variable, matriz, vector, solucion, idContenedor) {
         var n = matriz.length;
         var contenedor = document.getElementById(idContenedor);
         contenedor.innerHTML = "";
@@ -99,7 +124,10 @@ var ApplicationController = /** @class */ (function () {
             var fila = document.createElement("tr");
             for (var j = 0; j < n; j++) {
                 var celda = document.createElement("td");
-                celda.innerHTML = matriz[i][j] + "";
+                var input = document.createElement("input");
+                input.type = "number";
+                input.value = matriz[i][j] + "";
+                celda.append(input);
                 fila.append(celda);
             }
             tabla.append(fila);
@@ -118,15 +146,42 @@ var ApplicationController = /** @class */ (function () {
         for (var i = 0; i < n; i++) {
             var fila = document.createElement("tr");
             var celda = document.createElement("td");
-            celda.innerHTML = vector[i] + "";
+            var input = document.createElement("input");
+            input.type = "number";
+            input.value = vector[i] + "";
+            celda.append(input);
             fila.append(celda);
             tabla3.append(fila);
         }
         contenedor.append(tabla3);
+        var spanner = document.createElement("div");
+        spanner.classList.add("flx-grow1");
+        contenedor.append(spanner);
+        var tabla4 = document.createElement("table");
+        for (var i = 0; i < n; i++) {
+            var fila = document.createElement("tr");
+            var celda = document.createElement("td");
+            celda.innerHTML = variable + (i + 1) + " = ";
+            fila.append(celda);
+            tabla4.append(fila);
+        }
+        contenedor.append(tabla4);
+        var tabla5 = document.createElement("table");
+        for (var i = 0; i < n; i++) {
+            var fila = document.createElement("tr");
+            var celda = document.createElement("td");
+            var input = document.createElement("input");
+            input.type = "number";
+            input.value = solucion[i] + "";
+            celda.append(input);
+            fila.append(celda);
+            tabla5.append(fila);
+        }
+        contenedor.append(tabla5);
     };
     ApplicationController.prototype.resolverSistema = function (n) {
-        document.getElementById("super-contenedor-solucion").classList.remove("display-none");
-        document.getElementById("super-contenedor-solucion").classList.add("display-block");
+        document.getElementById("super-contenedor-solucion").classList.remove("dsp-none");
+        document.getElementById("super-contenedor-solucion").classList.add("flex");
         document.getElementById("contenedor-solucion-matriz-l").innerHTML = "";
         document.getElementById("contenedor-solucion-matriz-u").innerHTML = "";
         var matrizA = [];
@@ -142,8 +197,8 @@ var ApplicationController = /** @class */ (function () {
         }
         this._factorizadorDeMatrices.factorizarMatrizOriginal(matrizA);
         this._factorizadorDeMatrices.resolverSistemaDeEcuaciones(vectorB);
-        this.mostrarResultados("Y", this._factorizadorDeMatrices.matrizL, this._factorizadorDeMatrices.vectorY, "contenedor-solucion-vector-y");
-        this.mostrarResultados("X", this._factorizadorDeMatrices.matrizU, this._factorizadorDeMatrices.vectorX, "contenedor-solucion-vector-x");
+        this.mostrarResultados("Y", this._factorizadorDeMatrices.matrizL, vectorB, this._factorizadorDeMatrices.vectorY, "contenedor-solucion-vector-y");
+        this.mostrarResultados("X", this._factorizadorDeMatrices.matrizU, this._factorizadorDeMatrices.vectorY, this._factorizadorDeMatrices.vectorX, "contenedor-solucion-vector-x");
     };
     return ApplicationController;
 }());

@@ -5,11 +5,11 @@ input::-webkit-inner-spin-button {
 }
 
 input[type="number"]{
-    width: 111px;
+    text-align: center;
+    width: 77px;
     line-height: 1;
     font-size: 15px;
     box-shadow: none;
-    padding: 0 0 0 10px;
     color: white;
     -webkit-tap-highlight-color: transparent;
     background: #222222;
@@ -23,6 +23,10 @@ input[type="number"]{
 input[type="number"]:focus{
     border-bottom: 2px solid #54C3FA;
     outline: none;
+}
+
+.dsp-none{
+    display: none;
 }
 .flex{
     display: flex;
@@ -38,4 +42,8 @@ input[type="number"]:focus{
 
 .flx-center-cross-axis{
     align-items: center;
+ }
+
+ .flx-grow1{
+    flex-grow: 1;
  }

@@ -30,6 +30,32 @@
                     <button id="btn-resolver-sistema">Siguiente</button>
                 </div>
             </div>
+            <div id="super-contenedor-solucion" class="flex flx-column flx-center-main-axis">
+                <label for="mostrar-contenedor-vector-x" class="flex flx-column flx-center-main-axis">Solución general del sistema</label>
+                <input id="mostrar-contenedor-vector-x" type="checkbox" class="dsp-none">
+                <div id="super-contenedor-vector-x">
+                    <div id="contenedor-solucion-vector-x" class="flex"></div>
+                </div>
+                <label for="mostrar-contenedor-vector-y" class="flex flx-column flx-center-main-axis">Obtención del vector auxiliar Y</label>
+                <input id="mostrar-contenedor-vector-y" type="checkbox" class="dsp-none">
+                <div id="super-contenedor-vector-y">
+                    <div id="contenedor-solucion-vector-y" class="flex"></div>
+                </div>
+                <label for="mostrar-contenedor-matrices" class="flex flx-column flx-center-main-axis">Obtención de las matrices L y U</label>
+                <input id="mostrar-contenedor-matrices" type="checkbox" class="dsp-none">
+                <div id="super-contenedor-matrices">
+                    <div id="contenedor-solucion-matrices" class="flex">
+                        <div class="flx-grow1">
+                            <h2>Obtención de la matriz L</h2>
+                            <div id="contenedor-solucion-matriz-l"></div>
+                        </div>
+                        <div class="flx-grow1">
+                            <h2>Obtención de la matriz U</h2>
+                            <div id="contenedor-solucion-matriz-u"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </body>
     <script src="CalculatorEngine/prodReadyBundle.js"></script>
