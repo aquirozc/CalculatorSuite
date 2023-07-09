@@ -180,8 +180,7 @@ var ApplicationController = /** @class */ (function () {
         contenedor.append(tabla5);
     };
     ApplicationController.prototype.resolverSistema = function (n) {
-        document.getElementById("super-contenedor-solucion").classList.remove("dsp-none");
-        document.getElementById("super-contenedor-solucion").classList.add("flex");
+        document.getElementById("super-contenedor-solucion").style.maxHeight = "10000vh";
         document.getElementById("contenedor-solucion-matriz-l").innerHTML = "";
         document.getElementById("contenedor-solucion-matriz-u").innerHTML = "";
         var matrizA = [];
