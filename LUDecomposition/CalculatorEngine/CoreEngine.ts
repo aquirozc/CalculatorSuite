@@ -30,8 +30,8 @@ class FactorizadorDeMatrices{
                     this._matrizU[j][k] = this._matrizU[j][k] - (pivote * this._matrizU[i][k]);
                 }
                 contador++;
-                this.controller.mostrarDesglose(contador,this.matrizL,"contenedor-solucion-matriz-l");
-                this.controller.mostrarDesglose(contador,this.matrizU,"contenedor-solucion-matriz-u");
+                this.controller.mostrarDesglose(contador,this.matrizL,"contenedor-matriz-l");
+                this.controller.mostrarDesglose(contador,this.matrizU,"contenedor-matriz-u");
             }
         }
     }

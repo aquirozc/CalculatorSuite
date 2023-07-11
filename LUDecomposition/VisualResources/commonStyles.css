@@ -1,33 +1,60 @@
+*{
+    box-sizing: border-box;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  margin: 0;
 }
 
-input[type="number"]{
-    text-align: center;
-    width: 77px;
-    line-height: 1;
-    font-size: 15px;
-    box-shadow: none;
-    color: white;
-    -webkit-tap-highlight-color: transparent;
+.fluent-input{
     background: #222222;
-    height: 33px;
     border-radius: 4px;
     border: 1px solid #555555;
     border-bottom: 1px solid #999;
+    box-shadow: none;
+    color: #FFFFFF;
+    font-size: 15px;
+    height: 33px;
+    line-height: 1;
     margin: 0 5px 5px 0;
+    text-align: center;
+    width: 77px;
+    -webkit-tap-highlight-color: transparent;
 }
 
-input[type="number"]:focus{
+.fluent-input:focus{
     border-bottom: 2px solid #54C3FA;
+    outline: none;
+}
+
+.blank-input{
+    background: transparent;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    color: #FFFFFF;
+    font-size: 15px;
+    height: 33px;
+    line-height: 1;
+    margin: 0 5px 5px 0;
+    text-align: center;
+    width: 45px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.blank-input:focus{
     outline: none;
 }
 
 .dsp-none{
     display: none;
 }
+
 .flex{
     display: flex;
 }
@@ -46,4 +73,10 @@ input[type="number"]:focus{
 
  .flx-grow1{
     flex-grow: 1;
+ }
+
+ .ocultable{
+    height: 0;
+    overflow: hidden;
+    transition: all 0.66s;
  }

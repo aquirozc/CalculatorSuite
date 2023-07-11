@@ -5,12 +5,10 @@ exports.ApplicationController = void 0;
 var CoreEngine_1 = require("./CoreEngine");
 var ApplicationController = /** @class */ (function () {
     function ApplicationController() {
-        this._barraSelectora = document.getElementById("seleccion-dimension");
+        this._barraSelectora = document.getElementById("sldr-escoger-tamaño");
         this._botonGenerarCampos = document.getElementById("btn-generar-campos");
         this._botonResolverSistema = document.getElementById("btn-resolver-sistema");
-        this._botonMostrarVectorX = document.getElementById("mostrar-contenedor-vector-x");
-        this._botonMostrarVectorY = document.getElementById("mostrar-contenedor-vector-y");
-        this._botonMostrarMatrices = document.getElementById("mostrar-contenedor-matrices");
+        this._idElementosOcultables = ["contenedor-vector-x", "contenedor-vector-y", "contenedor-matrices"];
         this._factorizadorDeMatrices = new CoreEngine_1.FactorizadorDeMatrices(this);
     }
     ApplicationController.prototype.onCreate = function () {
@@ -31,158 +29,65 @@ var ApplicationController = /** @class */ (function () {
             event.preventDefault();
             _this.resolverSistema(_this._barraSelectora.value);
         });
-        this._botonMostrarVectorX.addEventListener("click", function () {
-            var contenedor = document.getElementById("contenedor-solucion-vector-x");
-            var superContenedor = document.getElementById("super-contenedor-vector-x");
-            var newHeight = _this._botonMostrarVectorX.checked ? contenedor.clientHeight : 0;
-            superContenedor.style.height = newHeight + "px";
-        });
-        this._botonMostrarVectorY.addEventListener("click", function () {
-            var contenedor = document.getElementById("contenedor-solucion-vector-y");
-            var superContenedor = document.getElementById("super-contenedor-vector-y");
-            var newHeight = _this._botonMostrarVectorY.checked ? contenedor.clientHeight : 0;
-            superContenedor.style.height = newHeight + "px";
-        });
-        this._botonMostrarMatrices.addEventListener("click", function () {
-            var contenedor = document.getElementById("contenedor-solucion-matrices");
-            var superContenedor = document.getElementById("super-contenedor-matrices");
-            var newHeight = _this._botonMostrarMatrices.checked ? contenedor.clientHeight : 0;
-            console.log(_this._botonMostrarVectorX.checked);
-            superContenedor.style.height = newHeight + "px";
-        });
+        var _loop_1 = function (id) {
+            var botonMostrarSuperContenedor = document.getElementById("mostrar-super-" + id);
+            botonMostrarSuperContenedor.addEventListener('click', function () {
+                var superContenedor = document.getElementById("super-" + id);
+                var contenedor = document.getElementById(id);
+                var newHeight = botonMostrarSuperContenedor.checked ? contenedor.clientHeight : 0;
+                superContenedor.style.height = newHeight + "px";
+            });
+        };
+        for (var _i = 0, _a = this._idElementosOcultables; _i < _a.length; _i++) {
+            var id = _a[_i];
+            _loop_1(id);
+        }
     };
     ApplicationController.prototype.generarCampos = function (n) {
-        var contenedor = document.getElementById("input-contenedor");
-        contenedor.innerHTML = "";
-        var tabla = document.createElement("table");
         this._elementosMatrizA = [];
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            this._elementosMatrizA[i] = [];
-            for (var j = 0; j < n; j++) {
-                var input = document.createElement("input");
-                var celda = document.createElement("td");
-                input.type = "number";
-                this._elementosMatrizA[i][j] = input;
-                celda.append(input);
-                fila.append(celda);
-            }
-            tabla.append(fila);
-        }
-        contenedor.append(tabla);
-        var tabla2 = document.createElement("table");
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            var celda = document.createElement("td");
-            celda.innerHTML = "X" + (i + 1);
-            fila.append(celda);
-            tabla2.append(fila);
-        }
-        contenedor.append(tabla2);
-        var tabla3 = document.createElement("table");
         this._elementosVectorB = [];
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            var input = document.createElement("input");
-            var celda = document.createElement("td");
-            input.type = "number";
-            this._elementosVectorB[i] = input;
-            celda.append(input);
-            fila.append(celda);
-            tabla3.append(fila);
-        }
-        contenedor.append(tabla3);
-        document.getElementById("input-super-contenedor").style.height = (contenedor.clientHeight + 80) + "px";
-        ;
+        var contenedor = document.getElementById("contenedor-input");
+        var tabla;
+        contenedor.innerHTML = "";
+        tabla = this.generarMatrizInputs(n, this._elementosMatrizA, "number", "fluent-input", false, false, "", [], "");
+        contenedor.append(tabla);
+        tabla = this.generarVectorInputs(n, [], "text", "blank-input", true, true, "X", this.generarRango(1, n), "");
+        contenedor.append(tabla);
+        tabla = this.generarVectorInputs(n, this._elementosVectorB, "number", "fluent-input", false, false, "", [], "");
+        contenedor.append(tabla);
+        document.getElementById("super-contenedor-input").style.height = (contenedor.clientHeight + 100) + "px";
     };
     ApplicationController.prototype.mostrarDesglose = function (paso, matriz, idContenedor) {
         var contenedor = document.getElementById(idContenedor);
-        var tabla = document.createElement("table");
+        var tabla;
         var sub = document.createElement("h3");
         sub.innerHTML = "Paso " + paso;
-        for (var i = 0; i < matriz.length; i++) {
-            var fila = document.createElement("tr");
-            for (var j = 0; j < matriz.length; j++) {
-                var celda = document.createElement("td");
-                var input = document.createElement("input");
-                input.type = "number";
-                input.value = matriz[i][j] + "";
-                celda.append(input);
-                fila.append(celda);
-            }
-            tabla.append(fila);
-        }
-        contenedor.appendChild(sub);
+        tabla = this.generarMatrizInputs(matriz.length, [], "number", "fluent-input", true, true, "", matriz, "");
+        contenedor.append(sub);
         contenedor.append(tabla);
     };
     ApplicationController.prototype.mostrarResultados = function (variable, matriz, vector, solucion, idContenedor) {
         var n = matriz.length;
         var contenedor = document.getElementById(idContenedor);
+        var tabla;
         contenedor.innerHTML = "";
-        var tabla = document.createElement("table");
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            for (var j = 0; j < n; j++) {
-                var celda = document.createElement("td");
-                var input = document.createElement("input");
-                input.type = "number";
-                input.value = matriz[i][j] + "";
-                celda.append(input);
-                fila.append(celda);
-            }
-            tabla.append(fila);
-        }
+        tabla = this.generarMatrizInputs(n, [], "number", "fluent-input", true, true, "", matriz, "");
         contenedor.append(tabla);
-        var tabla2 = document.createElement("table");
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            var celda = document.createElement("td");
-            celda.innerHTML = variable + (i + 1);
-            fila.append(celda);
-            tabla2.append(fila);
-        }
-        contenedor.append(tabla2);
-        var tabla3 = document.createElement("table");
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            var celda = document.createElement("td");
-            var input = document.createElement("input");
-            input.type = "number";
-            input.value = vector[i] + "";
-            celda.append(input);
-            fila.append(celda);
-            tabla3.append(fila);
-        }
-        contenedor.append(tabla3);
+        tabla = this.generarVectorInputs(n, [], "text", "blank-input", true, true, variable, this.generarRango(1, n), "");
+        contenedor.append(tabla);
+        tabla = this.generarVectorInputs(n, [], "number", "fluent-input", true, true, "", vector, "");
+        contenedor.append(tabla);
         var spanner = document.createElement("div");
         spanner.classList.add("flx-grow1");
         contenedor.append(spanner);
-        var tabla4 = document.createElement("table");
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            var celda = document.createElement("td");
-            celda.innerHTML = variable + (i + 1) + " = ";
-            fila.append(celda);
-            tabla4.append(fila);
-        }
-        contenedor.append(tabla4);
-        var tabla5 = document.createElement("table");
-        for (var i = 0; i < n; i++) {
-            var fila = document.createElement("tr");
-            var celda = document.createElement("td");
-            var input = document.createElement("input");
-            input.type = "number";
-            input.value = solucion[i] + "";
-            celda.append(input);
-            fila.append(celda);
-            tabla5.append(fila);
-        }
-        contenedor.append(tabla5);
+        tabla = this.generarVectorInputs(n, [], "text", "blank-input", true, true, variable, this.generarRango(1, n), " =");
+        contenedor.append(tabla);
+        tabla = this.generarVectorInputs(n, [], "number", "fluent-input", true, true, "", solucion, "");
+        contenedor.append(tabla);
     };
     ApplicationController.prototype.resolverSistema = function (n) {
-        document.getElementById("super-contenedor-solucion").style.maxHeight = "10000vh";
-        document.getElementById("contenedor-solucion-matriz-l").innerHTML = "";
-        document.getElementById("contenedor-solucion-matriz-u").innerHTML = "";
+        document.getElementById("contenedor-matriz-l").innerHTML = "";
+        document.getElementById("contenedor-matriz-u").innerHTML = "";
         var matrizA = [];
         var vectorB = [];
         for (var i = 0; i < n; i++) {
@@ -196,8 +101,53 @@ var ApplicationController = /** @class */ (function () {
         }
         this._factorizadorDeMatrices.factorizarMatrizOriginal(matrizA);
         this._factorizadorDeMatrices.resolverSistemaDeEcuaciones(vectorB);
-        this.mostrarResultados("Y", this._factorizadorDeMatrices.matrizL, vectorB, this._factorizadorDeMatrices.vectorY, "contenedor-solucion-vector-y");
-        this.mostrarResultados("X", this._factorizadorDeMatrices.matrizU, this._factorizadorDeMatrices.vectorY, this._factorizadorDeMatrices.vectorX, "contenedor-solucion-vector-x");
+        this.mostrarResultados("Y", this._factorizadorDeMatrices.matrizL, vectorB, this._factorizadorDeMatrices.vectorY, "contenedor-vector-y");
+        this.mostrarResultados("X", this._factorizadorDeMatrices.matrizU, this._factorizadorDeMatrices.vectorY, this._factorizadorDeMatrices.vectorX, "contenedor-vector-x");
+        document.getElementById("super-contenedor-solucion").style.maxHeight = "10000vh";
+    };
+    ApplicationController.prototype.generarMatrizInputs = function (n, contenedor, tipo, clase, readOnly, remplazarValor, cadenaBase, valores, cadenaTerminal) {
+        var tabla = document.createElement("table");
+        for (var i = 0; i < n; i++) {
+            var fila = document.createElement("tr");
+            contenedor[i] = [];
+            for (var j = 0; j < n; j++) {
+                var celda = document.createElement("td");
+                var input = document.createElement("input");
+                input.type = tipo;
+                input.value = remplazarValor ? cadenaBase + valores[i][j] + cadenaTerminal : "";
+                input.readOnly = readOnly;
+                input.classList.add(clase);
+                contenedor[i][j] = input;
+                celda.append(input);
+                fila.append(celda);
+            }
+            tabla.append(fila);
+        }
+        return tabla;
+    };
+    ApplicationController.prototype.generarVectorInputs = function (n, contenedor, tipo, clase, readOnly, remplazarValor, cadenaBase, valores, cadenaTerminal) {
+        var tabla = document.createElement("table");
+        for (var i = 0; i < n; i++) {
+            var celda = document.createElement("td");
+            var fila = document.createElement("tr");
+            var input = document.createElement("input");
+            input.type = tipo;
+            input.value = remplazarValor ? cadenaBase + valores[i] + cadenaTerminal : "";
+            input.readOnly = readOnly;
+            input.classList.add(clase);
+            contenedor[i] = input;
+            celda.append(input);
+            fila.append(celda);
+            tabla.append(fila);
+        }
+        return tabla;
+    };
+    ApplicationController.prototype.generarRango = function (a, b) {
+        var rango = [];
+        for (var i = 0; i <= b - a; i++) {
+            rango[i] = i + 1;
+        }
+        return rango;
     };
     return ApplicationController;
 }());
@@ -226,8 +176,8 @@ var FactorizadorDeMatrices = /** @class */ (function () {
                     this._matrizU[j][k] = this._matrizU[j][k] - (pivote * this._matrizU[i][k]);
                 }
                 contador++;
-                this.controller.mostrarDesglose(contador, this.matrizL, "contenedor-solucion-matriz-l");
-                this.controller.mostrarDesglose(contador, this.matrizU, "contenedor-solucion-matriz-u");
+                this.controller.mostrarDesglose(contador, this.matrizL, "contenedor-matriz-l");
+                this.controller.mostrarDesglose(contador, this.matrizU, "contenedor-matriz-u");
             }
         }
     };

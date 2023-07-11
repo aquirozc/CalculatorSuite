@@ -1,14 +1,6 @@
-*{
-    box-sizing: border-box;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 0;
-    margin: 0;
-}
-
 body{
+    background-image: url(FirstLogonBackground.png);
     min-height: 100vh;
-    background-image: url('FirstLogonBackground.png');
 }
 
 main{
@@ -22,12 +14,11 @@ main > h1{
     margin-bottom: 25px;
 }
 
-div:has(#seleccion-dimension){
+div:has(#sldr-escoger-tamaño){
     height: 60px;
-    align-items: center;
 }
 
-#seleccion-dimension{
+#sldr-escoger-tamaño{
     appearance: none;
     background: linear-gradient(90deg, rgb(0, 120, 215) 12.5%, rgb(153, 153, 153) 12.5%);
     border-radius: 18px;
@@ -36,7 +27,7 @@ div:has(#seleccion-dimension){
     margin-right: 10px;
 }
 
-#seleccion-dimension::-webkit-slider-thumb{
+#sldr-escoger-tamaño::-webkit-slider-thumb{
     appearance: none;
     background-color: #0078D7;
     border: 5px solid white;
@@ -59,21 +50,15 @@ button{
     padding: 6px 18px;
 }
 
-#input-super-contenedor{
-    height: 0;
-    overflow: hidden;
-    transition: all 0.66s;
-}
-
-#input-contenedor{
+#contenedor-input{
     margin: 10px 0;
 }
 
-#input-super-contenedor div:nth-of-type(2){
+#super-contenedor-input div:nth-of-type(2){
     justify-content: flex-end;
 }
 
-#input-super-contenedor div:nth-of-type(2) button:not(:nth-child(3)){
+#super-contenedor-input div:nth-of-type(2) button:not(:nth-child(3)){
     background-color: rgb(54, 54, 54);
     margin-right: 10px;
 }
@@ -85,11 +70,11 @@ button{
 }
 
 #super-contenedor-solucion > label{
+    background-color: rgb(42, 42, 42);
+    border-radius: 8px;
     height: 70px;
     margin-top: 15px;
-    border-radius: 8px;
     padding: 1em;
-    background-color: rgb(42, 42, 42);
 }
 
 #super-contenedor-solucion > label > img{
@@ -103,10 +88,6 @@ button{
 }
 
 #super-contenedor-solucion > div{
-    height: 0;
-    overflow: hidden;
-    transition: all 0.66s;
-
     border-top: 3px solid rgb(28, 28, 28);
     border-radius: 8px;
     background-color: rgb(52,52, 52);
@@ -114,8 +95,4 @@ button{
 
 #super-contenedor-solucion div > div{
     padding: 0.88em;
-}
-
-#super-contenedor-matrices > div{
-    flex-grow: 1;
 }
