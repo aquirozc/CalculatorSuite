@@ -11,6 +11,17 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
+button{
+    background-color: #0078D7;
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-bottom-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+    font-size: 15px;
+    padding: 6px 18px;
+    user-select: none;
+}
+
 .fluent-input{
     background: #222222;
     border-radius: 4px;
